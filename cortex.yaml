@@ -1,0 +1,20 @@
+openapi: 3.0.1
+info:
+  title: xendit-cards-sdk
+  description: 
+  x-cortex-git:
+    github:
+      repository: xendit/xendit-cards-sdk
+  x-cortex-tag: xendit-cards-sdk
+  x-cortex-dependency: []
+  x-cortex-service-groups:
+    - P2
+    - shaun@xendit.co
+  x-cortex-owners:
+    - type: EMAIL
+      email: shaun@xendit.co
+    - type: GROUP
+      name: xendit-charge
+    - type: GROUP
+      name: xendit-cards-production
+    

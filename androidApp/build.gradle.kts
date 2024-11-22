@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-  implementation(project(":shared"))
+  implementation(project(":cardsSdk"))
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.tooling)
   implementation(libs.androidx.compose.ui.tooling.preview)

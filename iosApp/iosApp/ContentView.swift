@@ -1,5 +1,5 @@
 import SwiftUI
-import shared
+import cardsSdk
 
 struct ContentView: View {
 //	let appModule: AppModule

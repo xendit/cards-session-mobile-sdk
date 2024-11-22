@@ -12,13 +12,13 @@ kotlin {
   iosSimulatorArm64()
 
   cocoapods {
-    summary = "Some description for the Shared Module"
-    homepage = "Link to the Shared Module homepage"
+    summary = "Cards Session SDK module"
+    homepage = "Link to the Cards Session Module homepage"
     version = "1.0"
     ios.deploymentTarget = "16.0"
     podfile = project.file("../iosApp/Podfile")
     framework {
-      baseName = "shared"
+      baseName = "cardsSdk"
       isStatic = true
     }
   }

@@ -1,5 +1,5 @@
 import SwiftUI
-import shared
+import cardsSdk
 
 @main
 struct iOSApp: App {

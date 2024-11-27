@@ -26,13 +26,3 @@ data class CardsResponseDto(
   val payment_token_id: String? = null, // collectCardData will require either this or payment_request_id
   val action_url: String? = null // not required for any
 )
-
-@kotlinx.serialization.Serializable
-data class CardInfoDto(
-  val brand: String,
-  val type: String,
-  val category: String,
-  val issuer: String,
-  val country: String,
-  val card_art_url: String? = null
-)

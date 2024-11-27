@@ -49,10 +49,6 @@ class CardSessionViewModel(
         )
       }
 
-      CardSessionEvent.RetryCardSession -> {
-        // TODO: Implement retry logic
-      }
-
       CardSessionEvent.OnErrorSeen -> {
         _state.update { it.copy(error = null) }
       }

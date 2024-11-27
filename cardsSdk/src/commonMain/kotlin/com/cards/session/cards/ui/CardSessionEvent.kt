@@ -19,6 +19,5 @@ sealed class CardSessionEvent {
     val deviceFingerprint: String
   ) : CardSessionEvent()
 
-  object RetryCardSession : CardSessionEvent()
   object OnErrorSeen : CardSessionEvent()
 }

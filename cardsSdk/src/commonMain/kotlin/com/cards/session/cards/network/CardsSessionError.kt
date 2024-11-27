@@ -10,7 +10,8 @@ data class CardsErrorResponse(
 enum class CardsSessionError {
   SERVICE_UNAVAILABLE,
   UNKNOWN_ERROR,
-  INVALID_OAUTH_TOKEN
+  INVALID_OAUTH_TOKEN,
+  INVALID_TOKEN_ERROR
 }
 
 class CardsSessionException(

@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -94,7 +95,7 @@ fun AppRoot() {
         if (state.isLoading) {
           Text(text = "Loading...")
         } else if (state.error != null) {
-          Text(text = "Error: ${state.error}")
+          Text(text = "Error: ${state.error}", color = Color.Red)
         } else if (state.cardResponse != null) {
           Text(text = "Card Response: ${state.cardResponse}")
         }

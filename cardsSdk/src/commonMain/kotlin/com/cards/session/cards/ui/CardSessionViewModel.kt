@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class CardSessionViewModel(
   private val cardsPaymentSession: CardsPaymentSession,
-  private val coroutineScope: CoroutineScope?
+  coroutineScope: CoroutineScope? // prioritize scope from platform level, if any
 ) {
   private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
 

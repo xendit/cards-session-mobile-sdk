@@ -54,6 +54,7 @@ dependencies {
   implementation(libs.hilt.navigation.compose)
 
   implementation(libs.ktor.android)
+  implementation(libs.napier)
 
   androidTestImplementation(platform(libs.androidx.compose.bom))
   androidTestImplementation(libs.test.runner)

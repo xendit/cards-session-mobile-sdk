@@ -30,6 +30,7 @@ kotlin {
         implementation(libs.sqldelight.runtime)
         implementation(libs.sqldelight.coroutines.extensions)
         implementation(libs.kotlin.date.time)
+        implementation(libs.napier)
       }
     }
     val commonTest by getting {

@@ -1,9 +1,7 @@
 package com.cards.session.cards.network
 
 import com.cards.session.cards.models.CardsResponseDto
-import com.cards.session.cards.network.CardsSessionError.INVALID_OAUTH_TOKEN
-import com.cards.session.cards.network.CardsSessionError.SERVICE_UNAVAILABLE
-import com.cards.session.cards.network.CardsSessionError.UNKNOWN_ERROR
+import com.cards.session.util.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -14,19 +12,33 @@ import io.ktor.utils.io.errors.IOException
 class KtorCardsClient(
   private val httpClient: HttpClient
 ) : CardsClient {
+  private val logger = Logger("KtorCardsClient")
+
   override suspend fun paymentWithSession(authToken: String): CardsResponseDto {
     return try {
-      httpClient.get {
+      logger.info("Making payment session request")
+      val response = httpClient.get {
         url("${NetworkConstants.BASE_URL}/payment_with_session")
         header("Authorization", "Bearer $authToken")
-      }.body()
+      }.body<CardsResponseDto>()
+      logger.info("Payment session request successful")
+      response
     } catch (e: IOException) {
-      throw CardsSessionException(SERVICE_UNAVAILABLE, e.message ?: "Service Unavailable")
+      logger.error("Service unavailable", e)
+      throw CardsSessionException(
+        CardsSessionError.SERVICE_UNAVAILABLE,
+        e.message ?: "Service Unavailable"
+      )
     } catch (e: Exception) {
       if (e.message?.lowercase()?.contains("invalid_oauth_token") == true) {
-        throw CardsSessionException(INVALID_OAUTH_TOKEN, e.message ?: "Invalid OAuth Token")
+        logger.error("Invalid OAuth token", e)
+        throw CardsSessionException(
+          CardsSessionError.INVALID_OAUTH_TOKEN,
+          e.message ?: "Invalid OAuth Token"
+        )
       } else {
-        throw CardsSessionException(UNKNOWN_ERROR, e.message ?: "Unknown Error")
+        logger.error("Unknown error occurred", e)
+        throw CardsSessionException(CardsSessionError.UNKNOWN_ERROR, e.message ?: "Unknown Error")
       }
     }
   }

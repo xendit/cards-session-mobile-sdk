@@ -1,6 +1,7 @@
 package com.cards.session.cards.network
 
 import com.cards.session.cards.models.CardsResponseDto
+import com.cards.session.cards.network.CardsSessionError.INVALID_OAUTH_TOKEN
 import com.cards.session.cards.network.CardsSessionError.SERVICE_UNAVAILABLE
 import com.cards.session.cards.network.CardsSessionError.UNKNOWN_ERROR
 import io.ktor.client.HttpClient
@@ -22,7 +23,11 @@ class KtorCardsClient(
     } catch (e: IOException) {
       throw CardsSessionException(SERVICE_UNAVAILABLE, e.message ?: "Service Unavailable")
     } catch (e: Exception) {
-      throw CardsSessionException(UNKNOWN_ERROR, e.message ?: "Unknown Error")
+      if (e.message?.lowercase()?.contains("invalid_oauth_token") == true) {
+        throw CardsSessionException(INVALID_OAUTH_TOKEN, e.message ?: "Invalid OAuth Token")
+      } else {
+        throw CardsSessionException(UNKNOWN_ERROR, e.message ?: "Unknown Error")
+      }
     }
   }
 }

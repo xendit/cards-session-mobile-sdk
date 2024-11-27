@@ -4,12 +4,12 @@ import cardsSdk
 @main
 struct iOSApp: App {
 
-//    private var appModule: any AppModule = AppModuleImpl()
+    private var appModule: any AppModule = AppModuleImpl()
 
 	var body: some Scene {
 		WindowGroup {
             NavigationView {
-                ContentView()
+                ContentView(appModule: appModule)
             }
 		}
 	}

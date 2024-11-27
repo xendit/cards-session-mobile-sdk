@@ -68,13 +68,13 @@ fun AppRoot() {
         Button(content = { Text(text = "Collect Card Data") }, onClick = {
           viewModel.onEvent(
             CardSessionEvent.CollectCardData(
-              "4242424242424242",
-              "12/22",
-              "2026",
-              "First",
-              "Name",
-              "firstname@xendit.co",
-              "01231245242",
+              cardNumber = "4242424242424242",
+              expiryMonth = "12/22",
+              expiryYear = "2026",
+              cardholderFirstName = "First",
+              cardholderLastName = "Name",
+              cardholderEmail = "firstname@xendit.co",
+              cardholderPhoneNumber = "01231245242",
               paymentSessionId = "1234567890",
               deviceFingerprint = "1234567890"
             )
@@ -84,7 +84,7 @@ fun AppRoot() {
         Button(content = { Text(text = "Collect CVN") }, onClick = {
           viewModel.onEvent(
             CardSessionEvent.CollectCvn(
-              "123",
+              cvn = "123",
               paymentSessionId = "1234567890",
               deviceFingerprint = "1234567890"
             )

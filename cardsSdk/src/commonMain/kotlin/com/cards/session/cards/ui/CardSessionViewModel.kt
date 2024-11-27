@@ -63,7 +63,7 @@ class CardSessionViewModel(
     viewModelScope.launch {
       _state.update { it.copy(isLoading = true) }
 
-      when (val result = cardsPaymentSession.execute(request.toString())) {
+      when (val result = cardsPaymentSession.execute(request, "nbsp")) {
         is Resource.Success -> {
           _state.update {
             it.copy(
@@ -90,7 +90,7 @@ class CardSessionViewModel(
     viewModelScope.launch {
       _state.update { it.copy(isLoading = true) }
 
-      when (val result = cardsPaymentSession.execute(request.toString())) {
+      when (val result = cardsPaymentSession.execute(request, "nbcp")) {
         is Resource.Success -> {
           _state.update {
             it.copy(

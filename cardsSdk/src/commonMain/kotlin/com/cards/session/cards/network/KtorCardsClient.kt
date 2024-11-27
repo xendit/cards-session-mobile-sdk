@@ -26,9 +26,23 @@ class KtorCardsClient(
         url("${NetworkConstants.BASE_URL}/payment_with_session")
         header("Authorization", "Bearer $authToken")
       }
-      val responseBody = response.body<CardsResponseDto>()
-      logger.i("Payment session request successful. Response: $responseBody")
-      responseBody
+      
+      if (response.status.value in 200..299) {
+        val responseBody = response.body<CardsResponseDto>()
+        logger.i("Payment session request successful. Response: $responseBody")
+        responseBody
+      } else {
+        val errorBody = response.body<CardsErrorResponse>()
+        logger.e("Payment session request failed. Error: $errorBody")
+        throw CardsSessionException(
+          errorCode = when (errorBody.error_code) {
+            "INVALID_TOKEN_ERROR" -> CardsSessionError.INVALID_TOKEN_ERROR
+            "INVALID_OAUTH_TOKEN" -> CardsSessionError.INVALID_OAUTH_TOKEN
+            else -> CardsSessionError.UNKNOWN_ERROR
+          },
+          errorMessage = errorBody.message
+        )
+      }
     } catch (e: IOException) {
       logger.e("Service unavailable", e)
       throw CardsSessionException(
@@ -36,29 +50,11 @@ class KtorCardsClient(
         e.message ?: "Service Unavailable"
       )
     } catch (e: Exception) {
-      when {
-        e.message?.lowercase()?.contains("invalid_oauth_token") == true -> {
-          logger.e("Invalid OAuth token", e)
-          throw CardsSessionException(
-            CardsSessionError.INVALID_OAUTH_TOKEN,
-            e.message ?: "Invalid OAuth Token"
-          )
-        }
-        e.message?.lowercase()?.contains("invalid_token") == true -> {
-          logger.e("Invalid token", e)
-          throw CardsSessionException(
-            CardsSessionError.INVALID_TOKEN_ERROR,
-            e.message ?: "Invalid Token"
-          )
-        }
-        else -> {
-          logger.e("Unknown error occurred", e)
-          throw CardsSessionException(
-            CardsSessionError.UNKNOWN_ERROR,
-            e.message ?: "Unknown Error"
-          )
-        }
-      }
+      logger.e("Unknown error occurred", e)
+      throw CardsSessionException(
+        CardsSessionError.UNKNOWN_ERROR,
+        e.message ?: "Unknown Error"
+      )
     }
   }
 }

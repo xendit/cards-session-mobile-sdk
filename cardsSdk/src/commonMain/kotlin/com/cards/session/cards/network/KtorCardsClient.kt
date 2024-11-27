@@ -26,14 +26,14 @@ class KtorCardsClient(
         url("${NetworkConstants.BASE_URL}/payment_with_session")
         header("Authorization", "Bearer $authToken")
       }
-      
+
       if (response.status.value in 200..299) {
         val responseBody = response.body<CardsResponseDto>()
         logger.i("Payment session request successful. Response: $responseBody")
         responseBody
       } else {
         val errorBody = response.body<CardsErrorResponse>()
-        logger.e("Payment session request failed. Error: $errorBody")
+        logger.e("Payment session request failed. Error ${errorBody.error_code}: $errorBody")
         throw CardsSessionException(
           errorCode = when (errorBody.error_code) {
             "INVALID_TOKEN_ERROR" -> CardsSessionError.INVALID_TOKEN_ERROR
@@ -43,6 +43,8 @@ class KtorCardsClient(
           errorMessage = errorBody.message
         )
       }
+    } catch (e: CardsSessionException) {
+      throw e
     } catch (e: IOException) {
       logger.e("Service unavailable", e)
       throw CardsSessionException(

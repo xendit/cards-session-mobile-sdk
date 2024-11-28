@@ -23,7 +23,7 @@ object AppModule {
 
   @Provides
   @Singleton
-  fun provideRandomUserClient(httpClient: HttpClient): CardsClient {
+  fun provideCardsClient(httpClient: HttpClient): CardsClient {
     return KtorCardsClient(httpClient)
   }
 

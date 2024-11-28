@@ -3,7 +3,6 @@ plugins {
   alias(libs.plugins.kotlin.native.cocoapods)
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.serialization)
-  alias(libs.plugins.sqldelight)
 }
 kotlin {
   androidTarget()
@@ -27,8 +26,6 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(libs.bundles.ktor)
-        implementation(libs.sqldelight.runtime)
-        implementation(libs.sqldelight.coroutines.extensions)
         implementation(libs.kotlin.date.time)
         implementation(libs.napier)
       }
@@ -43,7 +40,6 @@ kotlin {
     val androidMain by getting {
       dependencies {
         implementation(libs.ktor.android)
-        implementation(libs.sqldelight.android.driver)
       }
     }
     val iosX64Main by getting
@@ -57,7 +53,6 @@ kotlin {
 
       dependencies {
         implementation(libs.ktor.ios)
-        implementation(libs.sqldelight.native.driver)
       }
     }
     val iosX64Test by getting

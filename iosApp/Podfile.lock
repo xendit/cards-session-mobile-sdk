@@ -1,16 +1,16 @@
 PODS:
-  - shared (1.0)
+  - cardsSdk (1.0)
 
 DEPENDENCIES:
-  - shared (from `../shared`)
+  - cardsSdk (from `../cardsSdk`)
 
 EXTERNAL SOURCES:
-  shared:
-    :path: "../shared"
+  cardsSdk:
+    :path: "../cardsSdk"
 
 SPEC CHECKSUMS:
-  shared: b86cb96101aaaf3222f8c8ae98aa0dc70ddefa19
+  cardsSdk: 7f311fe8287c75352cb28bd092ef18f02b56f338
 
-PODFILE CHECKSUM: 78d6cc1b71b232202c48a29d4e6c34972c534c73
+PODFILE CHECKSUM: 2d3ff3b1724835dab0bcce0b112c67a9f1440453
 
 COCOAPODS: 1.16.2

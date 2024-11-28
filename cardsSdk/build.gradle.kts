@@ -3,7 +3,6 @@ plugins {
   alias(libs.plugins.kotlin.native.cocoapods)
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.serialization)
-  alias(libs.plugins.sqldelight)
 }
 kotlin {
   androidTarget()
@@ -12,13 +11,13 @@ kotlin {
   iosSimulatorArm64()
 
   cocoapods {
-    summary = "Some description for the Shared Module"
-    homepage = "Link to the Shared Module homepage"
+    summary = "Cards Session SDK module"
+    homepage = "Link to the Cards Session Module homepage"
     version = "1.0"
     ios.deploymentTarget = "16.0"
     podfile = project.file("../iosApp/Podfile")
     framework {
-      baseName = "shared"
+      baseName = "cardsSdk"
       isStatic = true
     }
   }
@@ -27,9 +26,8 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(libs.bundles.ktor)
-        implementation(libs.sqldelight.runtime)
-        implementation(libs.sqldelight.coroutines.extensions)
         implementation(libs.kotlin.date.time)
+        implementation(libs.napier)
       }
     }
     val commonTest by getting {
@@ -42,7 +40,6 @@ kotlin {
     val androidMain by getting {
       dependencies {
         implementation(libs.ktor.android)
-        implementation(libs.sqldelight.android.driver)
       }
     }
     val iosX64Main by getting
@@ -56,7 +53,6 @@ kotlin {
 
       dependencies {
         implementation(libs.ktor.ios)
-        implementation(libs.sqldelight.native.driver)
       }
     }
     val iosX64Test by getting

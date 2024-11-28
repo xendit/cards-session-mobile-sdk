@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-  implementation(project(":shared"))
+  implementation(project(":cardsSdk"))
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.tooling)
   implementation(libs.androidx.compose.ui.tooling.preview)
@@ -54,6 +54,7 @@ dependencies {
   implementation(libs.hilt.navigation.compose)
 
   implementation(libs.ktor.android)
+  implementation(libs.napier)
 
   androidTestImplementation(platform(libs.androidx.compose.bom))
   androidTestImplementation(libs.test.runner)

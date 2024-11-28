@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CardsSessionSdk"
 include(":androidApp")
-include(":shared")
+include(":cardsSdk")

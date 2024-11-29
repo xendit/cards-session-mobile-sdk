@@ -17,6 +17,7 @@ assertK = "0.26.1"
 turbine = "0.7.0"
 rules = "1.6.1"
 napier = "2.7.1"
+xenditFingerprint = "1.0.0"
 
 [libraries]
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -47,6 +48,7 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 test-runner = { module = "androidx.test:runner", version.ref = "testRunner" }
 test-rule = { group = "androidx.test", name = "rules", version.ref = "rules" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+xendit-fingerprint = { module = "com.xendit:fingerprint", version.ref = "xenditFingerprint" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

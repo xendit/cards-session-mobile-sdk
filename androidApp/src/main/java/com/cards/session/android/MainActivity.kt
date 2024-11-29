@@ -76,8 +76,7 @@ fun AppRoot() {
               cardholderLastName = "Name",
               cardholderEmail = "firstname@xendit.co",
               cardholderPhoneNumber = "01231245242",
-              paymentSessionId = "1234567890",
-              deviceFingerprint = "1234567890"
+              paymentSessionId = "1234567890"
             )
           )
         })
@@ -86,8 +85,7 @@ fun AppRoot() {
           viewModel.onEvent(
             CardSessionEvent.CollectCvn(
               cvn = "123",
-              paymentSessionId = "1234567890",
-              deviceFingerprint = "1234567890"
+              paymentSessionId = "1234567890"
             )
           )
         })

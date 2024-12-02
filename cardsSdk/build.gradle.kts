@@ -28,6 +28,7 @@ kotlin {
         implementation(libs.bundles.ktor)
         implementation(libs.kotlin.date.time)
         implementation(libs.napier)
+        implementation(libs.kotlinx.coroutines.core)
       }
     }
     val commonTest by getting {

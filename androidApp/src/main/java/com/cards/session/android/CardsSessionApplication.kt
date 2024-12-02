@@ -10,12 +10,7 @@ import io.github.aakira.napier.Napier
 class CardsSessionApplication : Application() {
   override fun onCreate() {
     super.onCreate()
+    // TODO check that this doesn't show in production
     Napier.base(DebugAntilog())
-    
-    // TODO user should enter proper api key
-    XenditFingerprintSDK.init(
-      this,
-      "TODO"
-    )
   }
 }

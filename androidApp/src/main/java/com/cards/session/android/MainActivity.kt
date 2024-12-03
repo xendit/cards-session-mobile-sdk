@@ -84,7 +84,7 @@ fun AppRoot() {
                 cardholderLastName = "Name",
                 cardholderEmail = "firstname@xendit.co",
                 cardholderPhoneNumber = "01231245242",
-                paymentSessionId = "1234567890"
+                paymentSessionId = "session_id MUST be 27 chars"
               )
             }
           }

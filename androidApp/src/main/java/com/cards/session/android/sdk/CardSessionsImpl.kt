@@ -63,7 +63,7 @@ internal class CardSessionsImpl private constructor(
         card_number = cardNumber,
         expiry_month = expiryMonth,
         expiry_year = expiryYear,
-        cvn = cvn,
+        cvn = cvn ?: "000",
         cardholder_first_name = cardholderFirstName,
         cardholder_last_name = cardholderLastName,
         cardholder_email = cardholderEmail,

@@ -12,8 +12,6 @@ object AuthTokenGenerator {
     fun generateAuthToken(apiKey: String): String {
         // Format as "apiKey:" (note the colon at the end with no password)
         val credentials = "$apiKey:"
-        
-        // Encode to Base64
         return credentials.encodeBase64()
     }
 } 

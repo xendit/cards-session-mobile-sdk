@@ -30,7 +30,7 @@ class KtorCardsClient(
         url("${NetworkConstants.BASE_URL}/payment_with_session")
         header("Authorization", "Basic $authToken")
         header("Content-Type", "application/json")
-        setBody(body)  // Ensure this line is uncommented to send the body
+        setBody(body)
 
         logger.i("Full request: ${this.url} with headers: ${this.headers}")
       }

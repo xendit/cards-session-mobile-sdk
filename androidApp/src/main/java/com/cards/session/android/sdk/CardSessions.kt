@@ -56,14 +56,7 @@ interface CardSessions {
 
   companion object {
     fun create(context: Context, authToken: String): CardSessions {
-      Log.d("CardSessions", "Creating new CardSessionsImpl instance")
-      try {
-        XenditFingerprintSDK.init(context, authToken)
-        Log.d("CardSessions", "XenditFingerprintSDK initialized successfully")
-      } catch (e: Exception) {
-        Log.e("CardSessions", "Failed to initialize XenditFingerprintSDK", e)
-      }
-      return CardSessionsImpl(authToken)
+      return CardSessionsImpl.create(context, authToken)
     }
   }
 } 

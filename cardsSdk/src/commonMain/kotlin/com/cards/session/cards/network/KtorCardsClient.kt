@@ -5,11 +5,15 @@ import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.util.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.header
 import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.errors.IOException
+import kotlinx.serialization.json.Json
 
 class KtorCardsClient(
   private val httpClient: HttpClient
@@ -26,7 +30,13 @@ class KtorCardsClient(
         url("${NetworkConstants.BASE_URL}/payment_with_session")
         header("Authorization", "Basic $authToken")
         header("Content-Type", "application/json")
+        setBody(body)  // Ensure this line is uncommented to send the body
+
+        logger.i("Full request: ${this.url} with headers: ${this.headers}")
       }
+
+
+      logger.i("PaymentResponse: $response")
 
       if (response.status.value in 200..299) {
         val responseBody = response.body<CardsResponseDto>()

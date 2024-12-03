@@ -16,10 +16,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
+import com.cards.session.network.HttpClientFactory
 
-internal class CardSessionsImpl(
+internal class CardSessionsImpl private constructor(
   private val authToken: String,
-  httpClient: HttpClient = HttpClient()
+  private val httpClient: HttpClient
 ) : CardSessions {
   private val TAG = "CardSessionsImpl"
   private val client = KtorCardsClient(httpClient)
@@ -141,8 +142,17 @@ internal class CardSessionsImpl(
 
   companion object {
     fun create(context: Context, apiKey: String): CardSessions {
-      XenditFingerprintSDK.init(context, apiKey)
-      return CardSessionsImpl(apiKey)
+      Log.d("CardSessions", "Creating new CardSessionsImpl instance")
+      try {
+        XenditFingerprintSDK.init(context, apiKey)
+        Log.d("CardSessions", "XenditFingerprintSDK initialized successfully")
+      } catch (e: Exception) {
+        Log.e("CardSessions", "Failed to initialize XenditFingerprintSDK", e)
+      }
+      return CardSessionsImpl(
+        authToken = apiKey,
+        httpClient = HttpClientFactory().create()
+      )
     }
   }
 } 

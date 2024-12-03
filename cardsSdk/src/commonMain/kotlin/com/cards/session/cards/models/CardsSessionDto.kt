@@ -1,6 +1,8 @@
 package com.cards.session.cards.models
 
-@kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CardsRequestDto(
   // required for collectCardData()
   val card_number: String? = null,
@@ -19,12 +21,12 @@ data class CardsRequestDto(
   val device: DeviceFingerprint
 )
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class DeviceFingerprint(
   var fingerprint: String = ""
 )
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class CardsResponseDto(
   val message: String,
   val payment_request_id: String? = null, // required for collectCvn

@@ -1,19 +1,18 @@
 package com.cards.session.android.sdk
 
+import android.content.Context
 import android.util.Log
 import com.cards.session.cards.models.CardsRequestDto
 import com.cards.session.cards.models.CardsResponseDto
+import com.cards.session.cards.models.DeviceFingerprint
 import com.cards.session.cards.network.KtorCardsClient
 import com.cards.session.cards.ui.CardSessionState
-import com.cards.session.util.Resource
 import com.cardsession.sdk.CreditCardUtil
 import com.xendit.fingerprintsdk.XenditFingerprintSDK
 import io.ktor.client.HttpClient
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -47,9 +46,11 @@ internal class CardSessionsImpl(
         !CreditCardUtil.isCreditCardNumberValid(cardNumber) -> {
           throw IllegalArgumentException("Card number is invalid")
         }
+
         !CreditCardUtil.isCreditCardExpirationDateValid(expiryMonth, expiryYear) -> {
           throw IllegalArgumentException("Card expiration date is invalid")
         }
+
         !CreditCardUtil.isCreditCardCVNValid(cvn) -> {
           throw IllegalArgumentException("Card CVN is invalid")
         }
@@ -67,7 +68,7 @@ internal class CardSessionsImpl(
         cardholder_email = cardholderEmail,
         cardholder_phone_number = cardholderPhoneNumber,
         payment_session_id = paymentSessionId,
-        device_fingerprint = deviceFingerprint
+        device = DeviceFingerprint(deviceFingerprint)
       )
 
       val response = client.paymentWithSession(request, authToken)
@@ -98,7 +99,7 @@ internal class CardSessionsImpl(
       val request = CardsRequestDto(
         cvn = cvn,
         payment_session_id = paymentSessionId,
-        device_fingerprint = deviceFingerprint
+        device = DeviceFingerprint(deviceFingerprint)
       )
 
       val response = client.paymentWithSession(request, authToken)
@@ -137,4 +138,11 @@ internal class CardSessionsImpl(
         continuation.resume("") // Return empty string on failure
       }
     }
+
+  companion object {
+    fun create(context: Context, apiKey: String): CardSessions {
+      XenditFingerprintSDK.init(context, apiKey)
+      return CardSessionsImpl(apiKey)
+    }
+  }
 } 

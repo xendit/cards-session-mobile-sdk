@@ -1,6 +1,7 @@
 package com.cards.session.cards.ui
 
 import com.cards.session.cards.models.CardsRequestDto
+import com.cards.session.cards.models.DeviceFingerprint
 import com.cards.session.cards.network.CardsPaymentSession
 import com.cards.session.cards.network.CardsSessionException
 import com.cards.session.util.AuthTokenGenerator
@@ -39,7 +40,7 @@ class CardSessionViewModel(
             cardholder_email = event.cardholderEmail,
             cardholder_phone_number = event.cardholderPhoneNumber,
             payment_session_id = event.paymentSessionId,
-            device_fingerprint = event.deviceFingerprint
+            device = DeviceFingerprint(event.deviceFingerprint)
           )
         )
       }
@@ -49,7 +50,7 @@ class CardSessionViewModel(
           CardsRequestDto(
             cvn = event.cvn,
             payment_session_id = event.paymentSessionId,
-            device_fingerprint = event.deviceFingerprint
+            device = DeviceFingerprint(event.deviceFingerprint)
           )
         )
       }

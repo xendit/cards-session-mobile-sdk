@@ -5,8 +5,8 @@ import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.util.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.post
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.utils.io.errors.IOException
@@ -22,9 +22,10 @@ class KtorCardsClient(
   ): CardsResponseDto {
     return try {
       logger.i("Making payment session request with body: $body and authToken $authToken")
-      val response: HttpResponse = httpClient.get {
+      val response: HttpResponse = httpClient.post {
         url("${NetworkConstants.BASE_URL}/payment_with_session")
-        header("Authorization", "Bearer $authToken")
+        header("Authorization", "Basic $authToken")
+        header("Content-Type", "application/json")
       }
 
       if (response.status.value in 200..299) {

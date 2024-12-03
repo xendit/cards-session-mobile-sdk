@@ -4,6 +4,13 @@ package com.cards.session.cards.network
 @kotlinx.serialization.Serializable
 data class CardsErrorResponse(
   val error_code: String,
+  val message: String,
+  val errors: List<XenError>? = null
+)
+
+@kotlinx.serialization.Serializable
+data class XenError(
+  val path: String,
   val message: String
 )
 

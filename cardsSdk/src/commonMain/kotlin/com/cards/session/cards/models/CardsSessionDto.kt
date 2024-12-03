@@ -16,7 +16,12 @@ data class CardsRequestDto(
 
   // always required
   val payment_session_id: String,
-  val device_fingerprint: String
+  val device: DeviceFingerprint
+)
+
+@kotlinx.serialization.Serializable
+data class DeviceFingerprint(
+  var fingerprint: String = ""
 )
 
 @kotlinx.serialization.Serializable

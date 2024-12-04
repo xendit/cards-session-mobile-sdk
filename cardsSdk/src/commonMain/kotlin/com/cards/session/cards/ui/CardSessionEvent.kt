@@ -10,13 +10,13 @@ sealed class CardSessionEvent {
     val cardholderEmail: String,
     val cardholderPhoneNumber: String,
     val paymentSessionId: String,
-    val deviceFingerprint: String
+    val deviceFingerprint: String = ""
   ) : CardSessionEvent()
 
   data class CollectCvn(
     val cvn: String,
     val paymentSessionId: String,
-    val deviceFingerprint: String
+    val deviceFingerprint: String = ""
   ) : CardSessionEvent()
 
   object OnErrorSeen : CardSessionEvent()

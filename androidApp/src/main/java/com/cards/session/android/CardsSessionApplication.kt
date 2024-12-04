@@ -1,6 +1,7 @@
 package com.cards.session.android
 
 import android.app.Application
+import com.xendit.fingerprintsdk.XenditFingerprintSDK
 import dagger.hilt.android.HiltAndroidApp
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
@@ -9,6 +10,7 @@ import io.github.aakira.napier.Napier
 class CardsSessionApplication : Application() {
   override fun onCreate() {
     super.onCreate()
+    // TODO check that this doesn't show in production
     Napier.base(DebugAntilog())
   }
 }

@@ -1,8 +1,11 @@
 package com.cards.session.cards.ui
 
 import com.cards.session.cards.models.CardsRequestDto
+import com.cards.session.cards.models.DeviceFingerprint
 import com.cards.session.cards.network.CardsPaymentSession
 import com.cards.session.cards.network.CardsSessionException
+import com.cards.session.util.AuthTokenGenerator
+import com.cards.session.util.Logger
 import com.cards.session.util.Resource
 import com.cards.session.util.toCommonStateFlow
 import kotlinx.coroutines.CoroutineScope
@@ -14,9 +17,12 @@ import kotlinx.coroutines.launch
 
 class CardSessionViewModel(
   private val cardsPaymentSession: CardsPaymentSession,
+  private val apiKey: String,
   coroutineScope: CoroutineScope? // prioritize scope from platform level, if any
 ) {
   private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
+  private val authToken = AuthTokenGenerator.generateAuthToken(apiKey)
+  private val logger = Logger("CardSessionViewModel")
 
   private val _state = MutableStateFlow(CardSessionState())
   val state = _state.asStateFlow().toCommonStateFlow()
@@ -34,7 +40,7 @@ class CardSessionViewModel(
             cardholder_email = event.cardholderEmail,
             cardholder_phone_number = event.cardholderPhoneNumber,
             payment_session_id = event.paymentSessionId,
-            device_fingerprint = event.deviceFingerprint
+            device = DeviceFingerprint(event.deviceFingerprint)
           )
         )
       }
@@ -44,7 +50,7 @@ class CardSessionViewModel(
           CardsRequestDto(
             cvn = event.cvn,
             payment_session_id = event.paymentSessionId,
-            device_fingerprint = event.deviceFingerprint
+            device = DeviceFingerprint(event.deviceFingerprint)
           )
         )
       }
@@ -59,7 +65,12 @@ class CardSessionViewModel(
     viewModelScope.launch {
       _state.update { it.copy(isLoading = true) }
 
-      when (val result = cardsPaymentSession.execute(request, "nbsp")) {
+      logger.d("Collecting card data")
+      logger.d("Request: $request")
+      logger.d("API key: $apiKey")
+      logger.d("Auth token: $authToken")
+
+      when (val result = cardsPaymentSession.execute(request, authToken)) {
         is Resource.Success -> {
           _state.update {
             it.copy(
@@ -86,7 +97,7 @@ class CardSessionViewModel(
     viewModelScope.launch {
       _state.update { it.copy(isLoading = true) }
 
-      when (val result = cardsPaymentSession.execute(request, "nbcp")) {
+      when (val result = cardsPaymentSession.execute(request, authToken)) {
         is Resource.Success -> {
           _state.update {
             it.copy(

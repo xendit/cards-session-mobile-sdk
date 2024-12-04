@@ -1,11 +1,8 @@
 package com.cards.session.android.sdk
 
 import android.content.Context
-import android.util.Log
 import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.cards.ui.CardSessionState
-import com.cards.session.util.Resource
-import com.xendit.fingerprintsdk.XenditFingerprintSDK
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -55,8 +52,8 @@ interface CardSessions {
   ): CardsResponseDto
 
   companion object {
-    fun create(context: Context, authToken: String): CardSessions {
-      return CardSessionsImpl.create(context, authToken)
+    fun create(context: Context, apiKey: String): CardSessions {
+      return CardSessionsImpl.create(context, apiKey)
     }
   }
 } 

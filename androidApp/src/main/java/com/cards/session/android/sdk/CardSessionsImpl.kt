@@ -7,6 +7,8 @@ import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.cards.models.DeviceFingerprint
 import com.cards.session.cards.network.KtorCardsClient
 import com.cards.session.cards.ui.CardSessionState
+import com.cards.session.network.HttpClientFactory
+import com.cards.session.util.AuthTokenGenerator
 import com.cardsession.sdk.CreditCardUtil
 import com.xendit.fingerprintsdk.XenditFingerprintSDK
 import io.ktor.client.HttpClient
@@ -16,10 +18,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
-import com.cards.session.network.HttpClientFactory
 
 internal class CardSessionsImpl private constructor(
-  private val authToken: String,
+  private val apiKey: String,
   private val httpClient: HttpClient
 ) : CardSessions {
   private val TAG = "CardSessionsImpl"
@@ -72,6 +73,7 @@ internal class CardSessionsImpl private constructor(
         device = DeviceFingerprint(deviceFingerprint)
       )
 
+      val authToken = AuthTokenGenerator.generateAuthToken(apiKey)
       val response = client.paymentWithSession(request, authToken)
       Log.d(TAG, "API request successful: $response")
       _state.update { it.copy(isLoading = false, cardResponse = response) }
@@ -103,6 +105,7 @@ internal class CardSessionsImpl private constructor(
         device = DeviceFingerprint(deviceFingerprint)
       )
 
+      val authToken = AuthTokenGenerator.generateAuthToken(apiKey)
       val response = client.paymentWithSession(request, authToken)
       Log.d(TAG, "API request successful: $response")
       _state.update { it.copy(isLoading = false, cardResponse = response) }
@@ -150,7 +153,7 @@ internal class CardSessionsImpl private constructor(
         Log.e("CardSessions", "Failed to initialize XenditFingerprintSDK", e)
       }
       return CardSessionsImpl(
-        authToken = apiKey,
+        apiKey = apiKey,
         httpClient = HttpClientFactory().create()
       )
     }

@@ -26,7 +26,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cards.session.android.sdk.CardSessions
-import com.cards.session.util.AuthTokenGenerator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,7 +50,12 @@ class MainActivity : ComponentActivity() {
 fun AppRoot() {
   val context = LocalContext.current
   val navController = rememberNavController()
-  val cardSessions = remember { CardSessions.create(context, AuthTokenGenerator.generateAuthToken("API_KEY_HERE")) }
+  val cardSessions = remember {
+    CardSessions.create(
+      context = context,
+      apiKey = "API_KEY_HERE"
+    )
+  }
   val state by cardSessions.state.collectAsState()
   val scope = CoroutineScope(Dispatchers.Main)
 

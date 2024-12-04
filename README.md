@@ -30,8 +30,8 @@ First, initialize the CardSessions instance with your Xendit public key:
 
 ```kotlin
 val cardSessions = CardSessions.create(
-    context,
-    "xnd_public_development_YOUR_KEY_HERE"
+    context = context,
+    apiKey = "xnd_public_development_YOUR_KEY_HERE"
 )
 ```
 

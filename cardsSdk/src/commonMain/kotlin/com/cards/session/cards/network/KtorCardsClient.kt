@@ -27,7 +27,7 @@ class KtorCardsClient(
     return try {
       logger.i("Making payment session request with body: $body and authToken $authToken")
       val response: HttpResponse = httpClient.post {
-        url("${NetworkConstants.BASE_URL}/payment_with_session")
+        url("${NetworkConstants.STG_URL}/payment_with_session")
         header("Authorization", "Basic $authToken")
         header("Content-Type", "application/json")
         setBody(body)

@@ -32,14 +32,15 @@ class CardSessionViewModel(
       is CardSessionEvent.CollectCardData -> {
         collectCardData(
           CardsRequestDto(
-            card_number = event.cardNumber,
-            expiry_month = event.expiryMonth,
-            expiry_year = event.expiryYear,
-            cardholder_first_name = event.cardholderFirstName,
-            cardholder_last_name = event.cardholderLastName,
-            cardholder_email = event.cardholderEmail,
-            cardholder_phone_number = event.cardholderPhoneNumber,
-            payment_session_id = event.paymentSessionId,
+            cardNumber = event.cardNumber,
+            expiryMonth = event.expiryMonth,
+            expiryYear = event.expiryYear,
+            cvn = event.cvn,
+            cardholderFirstName = event.cardholderFirstName,
+            cardholderLastName = event.cardholderLastName,
+            cardholderEmail = event.cardholderEmail,
+            cardholderPhoneNumber = event.cardholderPhoneNumber,
+            paymentSessionId = event.paymentSessionId,
             device = DeviceFingerprint(event.deviceFingerprint)
           )
         )
@@ -49,7 +50,7 @@ class CardSessionViewModel(
         collectCvn(
           CardsRequestDto(
             cvn = event.cvn,
-            payment_session_id = event.paymentSessionId,
+            paymentSessionId = event.paymentSessionId,
             device = DeviceFingerprint(event.deviceFingerprint)
           )
         )

@@ -63,15 +63,15 @@ internal class CardSessionsImpl private constructor(
       val deviceFingerprint = getFingerprint("collect_card_data")
       Log.d(TAG, "Making API request")
       val request = CardsRequestDto(
-        card_number = cardNumber,
-        expiry_month = expiryMonth,
-        expiry_year = expiryYear,
-        cvn = cvn ?: "000",
-        cardholder_first_name = cardholderFirstName,
-        cardholder_last_name = cardholderLastName,
-        cardholder_email = cardholderEmail,
-        cardholder_phone_number = cardholderPhoneNumber,
-        payment_session_id = paymentSessionId,
+        cardNumber = cardNumber,
+        expiryMonth = expiryMonth,
+        expiryYear = expiryYear,
+        cvn = cvn,
+        cardholderFirstName = cardholderFirstName,
+        cardholderLastName = cardholderLastName,
+        cardholderEmail = cardholderEmail,
+        cardholderPhoneNumber = cardholderPhoneNumber,
+        paymentSessionId = paymentSessionId,
         device = DeviceFingerprint(deviceFingerprint)
       )
 
@@ -112,7 +112,7 @@ internal class CardSessionsImpl private constructor(
       Log.d(TAG, "Making API request for CVN")
       val request = CardsRequestDto(
         cvn = cvn,
-        payment_session_id = paymentSessionId,
+        paymentSessionId = paymentSessionId,
         device = DeviceFingerprint(deviceFingerprint)
       )
 

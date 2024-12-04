@@ -1,24 +1,31 @@
 package com.cards.session.cards.models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// API will not accept null values, use string instead for all optional fields
 @Serializable
 data class CardsRequestDto(
   // required for collectCardData()
-  val card_number: String = "",
-  val expiry_month: String = "",
-  val expiry_year: String = "",
-  val cardholder_first_name: String = "",
-  val cardholder_last_name: String = "",
-  val cardholder_email: String = "",
-  val cardholder_phone_number: String = "",
+  @SerialName("card_number")
+  val cardNumber: String = "",
+  @SerialName("expiry_month")
+  val expiryMonth: String = "",
+  @SerialName("expiry_year")
+  val expiryYear: String = "",
+  @SerialName("cardholder_first_name")
+  val cardholderFirstName: String = "",
+  @SerialName("cardholder_last_name")
+  val cardholderLastName: String = "",
+  @SerialName("cardholder_email")
+  val cardholderEmail: String = "",
+  @SerialName("cardholder_phone_number")
+  val cardholderPhoneNumber: String = "",
 
   // required for collectCvn()
-  val cvn: String = "",
+  val cvn: String? = null,
 
-  // always required
-  val payment_session_id: String,
+  @SerialName("payment_session_id")
+  val paymentSessionId: String,
   val device: DeviceFingerprint
 )
 
@@ -30,7 +37,10 @@ data class DeviceFingerprint(
 @Serializable
 data class CardsResponseDto(
   val message: String,
-  val payment_request_id: String? = null, // required for collectCvn
-  val payment_token_id: String? = null, // collectCardData will require either this or payment_request_id
-  val action_url: String? = null // not required for any
+  @SerialName("payment_request_id")
+  val paymentRequestId: String? = null, // required for collectCvn
+  @SerialName("payment_token_id")
+  val paymentTokenId: String? = null, // collectCardData will require either this or payment_request_id
+  @SerialName("action_url")
+  val actionUrl: String? = null // not required for any
 )

@@ -65,6 +65,4 @@ dependencies {
 
   kspAndroidTest(libs.hilt.android.compiler)
   androidTestImplementation(libs.hilt.testing)
-
-  implementation(libs.xendit.fingerprint)
 }

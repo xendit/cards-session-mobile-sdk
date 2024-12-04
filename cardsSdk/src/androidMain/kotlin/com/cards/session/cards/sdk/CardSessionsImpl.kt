@@ -1,4 +1,4 @@
-package com.cards.session.android.sdk
+package com.cards.session.cards.sdk
 
 import android.content.Context
 import android.util.Log
@@ -158,4 +158,4 @@ internal class CardSessionsImpl private constructor(
       )
     }
   }
-} 
+}

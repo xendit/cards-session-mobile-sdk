@@ -5,6 +5,8 @@ import android.util.Log
 import com.cards.session.cards.models.CardsRequestDto
 import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.cards.models.DeviceFingerprint
+import com.cards.session.cards.network.CardsSessionError.UNKNOWN_ERROR
+import com.cards.session.cards.network.CardsSessionException
 import com.cards.session.cards.network.KtorCardsClient
 import com.cards.session.cards.ui.CardSessionState
 import com.cards.session.network.HttpClientFactory
@@ -40,7 +42,7 @@ internal class CardSessionsImpl private constructor(
     paymentSessionId: String
   ): CardsResponseDto {
     Log.d(TAG, "Starting collectCardData")
-    _state.update { it.copy(isLoading = true, error = null) }
+    _state.update { it.copy(isLoading = true, exception = null) }
 
     try {
       // Validate card data
@@ -78,10 +80,19 @@ internal class CardSessionsImpl private constructor(
       Log.d(TAG, "API request successful: $response")
       _state.update { it.copy(isLoading = false, cardResponse = response) }
       return response
+    } catch (e: CardsSessionException) {
+      Log.e(TAG, "API request failed", e)
+      _state.update { CardSessionState(isLoading = false, exception = e) }
+      return CardsResponseDto(message = e.message ?: "Unknown error")
     } catch (e: Exception) {
       Log.e(TAG, "API request failed", e)
-      _state.update { it.copy(isLoading = false) }
-      throw e
+      _state.update {
+        CardSessionState(
+          isLoading = false,
+          exception = CardsSessionException(errorCode = UNKNOWN_ERROR, e.message ?: "Unknown error")
+        )
+      }
+      return CardsResponseDto(message = e.message ?: "Unknown error")
     }
   }
 
@@ -90,7 +101,7 @@ internal class CardSessionsImpl private constructor(
     paymentSessionId: String
   ): CardsResponseDto {
     Log.d(TAG, "Starting collectCvn")
-    _state.update { it.copy(isLoading = true, error = null) }
+    _state.update { it.copy(isLoading = true, exception = null) }
 
     try {
       if (!CreditCardUtil.isCreditCardCVNValid(cvn)) {
@@ -110,10 +121,19 @@ internal class CardSessionsImpl private constructor(
       Log.d(TAG, "API request successful: $response")
       _state.update { it.copy(isLoading = false, cardResponse = response) }
       return response
+    } catch (e: CardsSessionException) {
+      Log.e(TAG, "API request failed", e)
+      _state.update { CardSessionState(isLoading = false, exception = e) }
+      return CardsResponseDto(message = e.message ?: "Unknown error")
     } catch (e: Exception) {
       Log.e(TAG, "API request failed", e)
-      _state.update { it.copy(isLoading = false) }
-      throw e
+      _state.update {
+        CardSessionState(
+          isLoading = false,
+          exception = CardsSessionException(errorCode = UNKNOWN_ERROR, e.message ?: "Unknown error")
+        )
+      }
+      return CardsResponseDto(message = e.message ?: "Unknown error")
     }
   }
 

@@ -66,7 +66,9 @@ fun AppRoot() {
   ) {
     composable(route = "cards") {
       Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+          .fillMaxSize()
+          .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
         Spacer(modifier = Modifier.height(32.dp))
@@ -113,7 +115,7 @@ fun AppRoot() {
           val errorMessage = state.exception?.message ?: "Error: ${state.exception?.errorCode}"
           Text(text = errorMessage, color = Color.Red)
         } else if (state.cardResponse != null) {
-          Text(text = "Card Response: ${state.cardResponse}")
+          Text(text = state.cardResponse?.message ?: "Success")
         }
       }
     }

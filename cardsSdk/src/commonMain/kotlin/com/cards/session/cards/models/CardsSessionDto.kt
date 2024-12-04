@@ -7,19 +7,19 @@ import kotlinx.serialization.Serializable
 data class CardsRequestDto(
   // required for collectCardData()
   @SerialName("card_number")
-  val cardNumber: String = "",
+  val cardNumber: String? = null,
   @SerialName("expiry_month")
-  val expiryMonth: String = "",
+  val expiryMonth: String? = null,
   @SerialName("expiry_year")
-  val expiryYear: String = "",
+  val expiryYear: String? = null,
   @SerialName("cardholder_first_name")
-  val cardholderFirstName: String = "",
+  val cardholderFirstName: String? = null,
   @SerialName("cardholder_last_name")
-  val cardholderLastName: String = "",
+  val cardholderLastName: String? = null,
   @SerialName("cardholder_email")
-  val cardholderEmail: String = "",
+  val cardholderEmail: String? = null,
   @SerialName("cardholder_phone_number")
-  val cardholderPhoneNumber: String = "",
+  val cardholderPhoneNumber: String? = null,
 
   // required for collectCvn()
   val cvn: String? = null,

@@ -1,4 +1,4 @@
-package com.cards.session.android.sdk
+package com.cards.session.cards.sdk
 
 import android.content.Context
 import com.cards.session.cards.models.CardsResponseDto

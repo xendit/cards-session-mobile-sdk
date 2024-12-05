@@ -5,6 +5,7 @@ sealed class CardSessionEvent {
     val cardNumber: String,
     val expiryMonth: String,
     val expiryYear: String,
+    val cvn: String?,
     val cardholderFirstName: String,
     val cardholderLastName: String,
     val cardholderEmail: String,

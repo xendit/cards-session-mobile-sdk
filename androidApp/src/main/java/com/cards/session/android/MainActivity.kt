@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -25,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.cards.session.android.sdk.CardSessions
+import com.cards.session.cards.sdk.CardSessions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -65,10 +66,12 @@ fun AppRoot() {
   ) {
     composable(route = "cards") {
       Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+          .fillMaxSize()
+          .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Text(
           text = "Welcome to Cards Session!",
           textAlign = TextAlign.Center,
@@ -108,10 +111,11 @@ fun AppRoot() {
         Spacer(modifier = Modifier.height(16.dp))
         if (state.isLoading) {
           Text(text = "Loading...")
-        } else if (state.error != null) {
-          Text(text = "Error: ${state.error}", color = Color.Red)
+        } else if (state.exception != null) {
+          val errorMessage = state.exception?.message ?: "Error: ${state.exception?.errorCode}"
+          Text(text = errorMessage, color = Color.Red)
         } else if (state.cardResponse != null) {
-          Text(text = "Card Response: ${state.cardResponse}")
+          Text(text = state.cardResponse?.message ?: "Success")
         }
       }
     }

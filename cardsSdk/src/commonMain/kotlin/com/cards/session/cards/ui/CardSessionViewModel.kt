@@ -32,14 +32,15 @@ class CardSessionViewModel(
       is CardSessionEvent.CollectCardData -> {
         collectCardData(
           CardsRequestDto(
-            card_number = event.cardNumber,
-            expiry_month = event.expiryMonth,
-            expiry_year = event.expiryYear,
-            cardholder_first_name = event.cardholderFirstName,
-            cardholder_last_name = event.cardholderLastName,
-            cardholder_email = event.cardholderEmail,
-            cardholder_phone_number = event.cardholderPhoneNumber,
-            payment_session_id = event.paymentSessionId,
+            cardNumber = event.cardNumber,
+            expiryMonth = event.expiryMonth,
+            expiryYear = event.expiryYear,
+            cvn = event.cvn,
+            cardholderFirstName = event.cardholderFirstName,
+            cardholderLastName = event.cardholderLastName,
+            cardholderEmail = event.cardholderEmail,
+            cardholderPhoneNumber = event.cardholderPhoneNumber,
+            paymentSessionId = event.paymentSessionId,
             device = DeviceFingerprint(event.deviceFingerprint)
           )
         )
@@ -49,14 +50,14 @@ class CardSessionViewModel(
         collectCvn(
           CardsRequestDto(
             cvn = event.cvn,
-            payment_session_id = event.paymentSessionId,
+            paymentSessionId = event.paymentSessionId,
             device = DeviceFingerprint(event.deviceFingerprint)
           )
         )
       }
 
       CardSessionEvent.OnErrorSeen -> {
-        _state.update { it.copy(error = null) }
+        _state.update { it.copy(exception = null) }
       }
     }
   }
@@ -76,7 +77,7 @@ class CardSessionViewModel(
             it.copy(
               cardResponse = result.data,
               isLoading = false,
-              error = null
+              exception = null
             )
           }
         }
@@ -85,7 +86,7 @@ class CardSessionViewModel(
           _state.update {
             it.copy(
               isLoading = false,
-              error = (result.throwable as? CardsSessionException)?.errorCode
+              exception = result.throwable as? CardsSessionException
             )
           }
         }
@@ -103,7 +104,7 @@ class CardSessionViewModel(
             it.copy(
               cardResponse = result.data,
               isLoading = false,
-              error = null
+              exception = null
             )
           }
         }
@@ -112,7 +113,7 @@ class CardSessionViewModel(
           _state.update {
             it.copy(
               isLoading = false,
-              error = (result.throwable as? CardsSessionException)?.errorCode
+              exception = result.throwable as? CardsSessionException
             )
           }
         }

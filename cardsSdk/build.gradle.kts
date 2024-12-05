@@ -76,6 +76,22 @@ android {
   defaultConfig {
     minSdk = 21
   }
+
+  buildTypes {
+    debug {
+      isMinifyEnabled = false
+      buildConfigField("String", "BASE_URL", "\"https://api.stg.tidnex.dev/v3\"")
+    }
+    release {
+      isMinifyEnabled = true
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro"
+      )
+      buildConfigField("String", "BASE_URL", "\"https://api.xendit.co/v3\"")
+    }
+  }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17

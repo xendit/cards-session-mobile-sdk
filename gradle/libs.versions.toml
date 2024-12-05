@@ -17,7 +17,7 @@ assertK = "0.26.1"
 turbine = "0.7.0"
 rules = "1.6.1"
 napier = "2.7.1"
-xenditFingerprint = "1.0.0"
+xenditFingerprint = "1.0.1"
 coroutines = "1.7.3"
 kotlinxSerialization = "1.5.1"
 

@@ -31,4 +31,7 @@
 -keepclassmembers class * {
     java.lang.String toString();
 }
+
+## don't warn on non-existent classes
+-dontwarn java.lang.invoke.StringConcatFactory
   

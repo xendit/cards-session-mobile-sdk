@@ -32,6 +32,7 @@ android {
     }
   }
   compileOptions {
+    isCoreLibraryDesugaringEnabled = true
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
   }
@@ -73,4 +74,6 @@ dependencies {
 
   kspAndroidTest(libs.hilt.android.compiler)
   androidTestImplementation(libs.hilt.testing)
+
+  coreLibraryDesugaring(libs.android.desugar)
 }

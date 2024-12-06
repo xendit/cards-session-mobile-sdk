@@ -88,11 +88,13 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
       )
+      consumerProguardFiles("proguard-rules.pro")
       buildConfigField("String", "BASE_URL", "\"https://api.xendit.co/v3\"")
     }
   }
 
   compileOptions {
+    isCoreLibraryDesugaringEnabled = true
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
   }
@@ -100,4 +102,8 @@ android {
   buildFeatures {
     buildConfig = true
   }
+}
+
+dependencies {
+  coreLibraryDesugaring(libs.android.desugar)
 }

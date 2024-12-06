@@ -6,8 +6,6 @@ plugins {
   alias(libs.plugins.hilt)
   alias(libs.plugins.kotlin.serialization)
 }
-
-
 android {
   namespace = "com.cards.session.android"
   compileSdk = 34
@@ -25,7 +23,12 @@ android {
   }
   buildTypes {
     getByName("release") {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro",
+        file("../cardsSdk/proguard-rules.pro")
+      )
     }
   }
   compileOptions {

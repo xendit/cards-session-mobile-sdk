@@ -20,6 +20,7 @@ napier = "2.7.1"
 xenditFingerprint = "1.0.1"
 coroutines = "1.7.3"
 kotlinxSerialization = "1.5.1"
+desugar = "2.0.4"
 
 [libraries]
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -53,6 +54,7 @@ napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 xendit-fingerprint = { module = "com.xendit:fingerprint", version.ref = "xenditFingerprint" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -41,7 +41,6 @@ internal class CardSessionsImpl private constructor(
     cardholderPhoneNumber: String,
     paymentSessionId: String
   ): CardsResponseDto {
-    Log.d(TAG, "Starting collectCardData")
     _state.update { it.copy(isLoading = true, exception = null) }
 
     try {
@@ -61,7 +60,6 @@ internal class CardSessionsImpl private constructor(
       }
 
       val deviceFingerprint = getFingerprint("collect_card_data")
-      Log.d(TAG, "Making API request")
       val request = CardsRequestDto(
         cardNumber = cardNumber,
         expiryMonth = expiryMonth,
@@ -77,7 +75,6 @@ internal class CardSessionsImpl private constructor(
 
       val authToken = AuthTokenGenerator.generateAuthToken(apiKey)
       val response = client.paymentWithSession(request, authToken)
-      Log.d(TAG, "API request successful: $response")
       _state.update { it.copy(isLoading = false, cardResponse = response) }
       return response
     } catch (e: CardsSessionException) {
@@ -100,7 +97,6 @@ internal class CardSessionsImpl private constructor(
     cvn: String,
     paymentSessionId: String
   ): CardsResponseDto {
-    Log.d(TAG, "Starting collectCvn")
     _state.update { it.copy(isLoading = true, exception = null) }
 
     try {
@@ -109,7 +105,6 @@ internal class CardSessionsImpl private constructor(
       }
 
       val deviceFingerprint = getFingerprint("collect_cvn")
-      Log.d(TAG, "Making API request for CVN")
       val request = CardsRequestDto(
         cvn = cvn,
         paymentSessionId = paymentSessionId,
@@ -118,7 +113,6 @@ internal class CardSessionsImpl private constructor(
 
       val authToken = AuthTokenGenerator.generateAuthToken(apiKey)
       val response = client.paymentWithSession(request, authToken)
-      Log.d(TAG, "API request successful: $response")
       _state.update { it.copy(isLoading = false, cardResponse = response) }
       return response
     } catch (e: CardsSessionException) {
@@ -140,15 +134,11 @@ internal class CardSessionsImpl private constructor(
   private suspend fun getFingerprint(eventName: String): String =
     suspendCancellableCoroutine { continuation ->
       try {
-        Log.d(TAG, "Starting fingerprint collection for event: $eventName")
         val sessionId = XenditFingerprintSDK.getSessionId()
-        Log.d(TAG, "Got session ID: $sessionId")
-
         XenditFingerprintSDK.scan(
           customerEventName = eventName,
           customerEventID = sessionId,
           onSuccess = {
-            Log.d(TAG, "Scan successful for event: $eventName")
             continuation.resume(sessionId)
           },
           onError = { error ->
@@ -165,10 +155,8 @@ internal class CardSessionsImpl private constructor(
 
   companion object {
     fun create(context: Context, apiKey: String): CardSessions {
-      Log.d("CardSessions", "Creating new CardSessionsImpl instance")
       try {
         XenditFingerprintSDK.init(context, apiKey)
-        Log.d("CardSessions", "XenditFingerprintSDK initialized successfully")
       } catch (e: Exception) {
         Log.e("CardSessions", "Failed to initialize XenditFingerprintSDK", e)
       }

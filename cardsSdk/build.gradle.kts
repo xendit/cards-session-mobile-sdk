@@ -83,7 +83,7 @@ android {
       buildConfigField("String", "BASE_URL", "\"https://api.stg.tidnex.dev/v3\"")
     }
     release {
-      isMinifyEnabled = true
+      isMinifyEnabled = false
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"

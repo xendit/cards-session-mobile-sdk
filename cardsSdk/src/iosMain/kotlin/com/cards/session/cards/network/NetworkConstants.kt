@@ -4,7 +4,7 @@ import platform.Foundation.NSBundle
 
 actual object NetworkConstants {
   actual val BASE_URL: String
-    get() = if (isDebugBuild()) "https://api.xendit.co/v3" else "https://api.stg.tidnex.dev/v3"
+    get() = if (isDebugBuild()) "https://api.stg.tidnex.dev/v3" else "https://api.xendit.co/v3"
 
   // please check this logic
   private fun isDebugBuild(): Boolean {

@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
-		0CE1FDA22CF6FE6500E5B89D /* IOSCardSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE1FDA12CF6FE6500E5B89D /* IOSCardSessionViewModel.swift */; };
+		0C0CDBC02D06AD03002DC16A /* CardSessionsImpl.kt in Resources */ = {isa = PBXBuildFile; fileRef = 0C0CDBBE2D06AD03002DC16A /* CardSessionsImpl.kt */; };
+		0C0CDBC62D06DB5C002DC16A /* CardSessions.kt in Resources */ = {isa = PBXBuildFile; fileRef = 0C0CDBC52D06DB5C002DC16A /* CardSessions.kt */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		2F9A03F732FC062E0B94E281 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E47D7C75F016D7EF416763 /* Pods_iosApp.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
@@ -18,7 +19,8 @@
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		0CE1FDA12CF6FE6500E5B89D /* IOSCardSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSCardSessionViewModel.swift; sourceTree = "<group>"; };
+		0C0CDBBE2D06AD03002DC16A /* CardSessionsImpl.kt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CardSessionsImpl.kt; path = ../cardsSdk/src/iosMain/kotlin/com/cards/session/cards/sdk/CardSessionsImpl.kt; sourceTree = SOURCE_ROOT; };
+		0C0CDBC52D06DB5C002DC16A /* CardSessions.kt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CardSessions.kt; path = ../cardsSdk/src/commonMain/kotlin/com/cards/session/cards/sdk/CardSessions.kt; sourceTree = SOURCE_ROOT; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		42AF08E65F4330F0220806A5 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +53,7 @@
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
+				0C0CDBC52D06DB5C002DC16A /* CardSessions.kt */,
 				7555FF7D242A565900829871 /* iosApp */,
 				7555FF7C242A565900829871 /* Products */,
 				EF9E122CF5BA2B8CAD48CD1D /* Pods */,
@@ -69,7 +72,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				0CE1FDA12CF6FE6500E5B89D /* IOSCardSessionViewModel.swift */,
+				0C0CDBBE2D06AD03002DC16A /* CardSessionsImpl.kt */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
@@ -156,6 +159,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
+				0C0CDBC62D06DB5C002DC16A /* CardSessions.kt in Resources */,
+				0C0CDBC02D06AD03002DC16A /* CardSessionsImpl.kt in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,7 +198,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				0CE1FDA22CF6FE6500E5B89D /* IOSCardSessionViewModel.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

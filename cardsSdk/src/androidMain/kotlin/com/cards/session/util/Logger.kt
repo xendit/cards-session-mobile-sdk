@@ -18,4 +18,7 @@ actual class Logger actual constructor(private val tag: String) {
     actual fun e(message: String, throwable: Throwable?) {
         Napier.e(message, throwable, tag)
     }
+
+    actual fun debugBuild() {
+    }
 } 

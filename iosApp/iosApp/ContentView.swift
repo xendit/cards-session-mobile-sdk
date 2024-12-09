@@ -37,7 +37,7 @@ struct ContentView: View {
                             cardholderLastName: "Name",
                             cardholderEmail: "firstname@xendit.co",
                             cardholderPhoneNumber: "01231245242",
-                            paymentSessionId: "session_id MUST be 27 chars"
+                            paymentSessionId: "ps-1234567890abcdef12345678"
                         )
                         cardResponse = response.description
                     } catch {
@@ -56,7 +56,7 @@ struct ContentView: View {
                     do {
                         let response = try await cardSessions.collectCvn(
                             cvn: "123",
-                            paymentSessionId: "1234567890"
+                            paymentSessionId: "ps-1234567890abcdef12345678"
                         )
                         cardResponse = response.description
                     } catch {

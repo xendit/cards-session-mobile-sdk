@@ -92,7 +92,7 @@ fun AppRoot() {
                 cardholderLastName = "Name",
                 cardholderEmail = "firstname@xendit.co",
                 cardholderPhoneNumber = "01231245242",
-                paymentSessionId = "session_id MUST be 27 chars"
+                paymentSessionId = "ps-1234567890abcdef12345678"
               )
             }
           }
@@ -104,7 +104,7 @@ fun AppRoot() {
             scope.launch {
               cardSessions.collectCvn(
                 cvn = "123",
-                paymentSessionId = "1234567890"
+                paymentSessionId = "ps-1234567890abcdef12345678"
               )
             }
           }

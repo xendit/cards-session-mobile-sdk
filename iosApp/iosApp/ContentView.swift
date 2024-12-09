@@ -25,6 +25,7 @@ struct ContentView: View {
                     cardNumber: "4242424242424242",
                     expiryMonth: "12/22",
                     expiryYear: "2026",
+                    cvn: nil,
                     cardholderFirstName: "First",
                     cardholderLastName: "Name",
                     cardholderEmail: "firstname@xendit.co",

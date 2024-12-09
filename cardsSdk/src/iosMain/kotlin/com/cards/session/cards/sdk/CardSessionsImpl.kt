@@ -9,6 +9,7 @@ import com.cards.session.cards.network.KtorCardsClient
 import com.cards.session.cards.ui.CardSessionState
 import com.cards.session.network.HttpClientFactory
 import com.cards.session.util.AuthTokenGenerator
+import com.cards.session.util.Logger
 import com.cardsession.sdk.CreditCardUtil
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,7 @@ internal class CardSessionsImpl private constructor(
   private val httpClient: HttpClient
 ) : CardSessions {
   private val TAG = "CardSessionsImpl"
+  private val logger = Logger(TAG)
   private val client = KtorCardsClient(httpClient)
   private val _state = MutableStateFlow(CardSessionState())
   override val state: StateFlow<CardSessionState> = _state.asStateFlow()
@@ -74,11 +76,11 @@ internal class CardSessionsImpl private constructor(
       _state.update { it.copy(isLoading = false, cardResponse = response) }
       return response
     } catch (e: CardsSessionException) {
-      NSLog("$TAG: API request failed: ${e.message}")
+      logger.e("API request failed: ${e.message}")
       _state.update { CardSessionState(isLoading = false, exception = e) }
       return CardsResponseDto(message = e.message ?: "Unknown error")
     } catch (e: Exception) {
-      NSLog("$TAG: API request failed: ${e.message}")
+      logger.e("API request failed: ${e.message}")
       _state.update {
         CardSessionState(
           isLoading = false,
@@ -112,11 +114,11 @@ internal class CardSessionsImpl private constructor(
       _state.update { it.copy(isLoading = false, cardResponse = response) }
       return response
     } catch (e: CardsSessionException) {
-      NSLog("$TAG: API request failed: ${e.message}")
+      logger.e("API request failed: ${e.message}")
       _state.update { CardSessionState(isLoading = false, exception = e) }
       return CardsResponseDto(message = e.message ?: "Unknown error")
     } catch (e: Exception) {
-      NSLog("$TAG: API request failed: ${e.message}")
+      logger.e("API request failed: ${e.message}")
       _state.update {
         CardSessionState(
           isLoading = false,
@@ -134,6 +136,7 @@ internal class CardSessionsImpl private constructor(
 
   companion object {
     fun create(apiKey: String): CardSessions {
+      Logger("").debugBuild()
       return CardSessionsImpl(
         apiKey = apiKey,
         httpClient = HttpClientFactory().create()

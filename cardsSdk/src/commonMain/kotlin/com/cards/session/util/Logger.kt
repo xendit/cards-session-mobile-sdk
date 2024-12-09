@@ -7,4 +7,5 @@ expect class Logger(tag: String) {
     fun i(message: String, throwable: Throwable? = null)
     fun w(message: String, throwable: Throwable? = null)
     fun e(message: String, throwable: Throwable? = null)
+    fun debugBuild()
 }

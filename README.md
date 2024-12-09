@@ -1,6 +1,6 @@
 # Xendit Cards SDK
 
-A lightweight SDK for integrating card payments into Android applications. This SDK provides secure card data collection functionality with built-in validation and 3DS support.
+A lightweight SDK for integrating card payments into Android and iOS applications. This SDK provides secure card data collection functionality with built-in validation and 3DS support.
 
 ## Features
 
@@ -12,7 +12,7 @@ A lightweight SDK for integrating card payments into Android applications. This 
 
 ## Installation
 
-### Gradle
+### Android - Gradle
 
 Add the following to your app's `build.gradle.kts`:
 
@@ -26,8 +26,7 @@ dependencies {
 
 ### Initialize the SDK
 
-First, initialize the CardSessions instance with your Xendit public key:
-
+#### Android
 ```kotlin
 val cardSessions = CardSessions.create(
     context = context,
@@ -35,8 +34,16 @@ val cardSessions = CardSessions.create(
 )
 ```
 
+#### iOS
+```swift
+let cardSessions = CardSessionsFactory().create(
+    apiKey: "xnd_public_development_YOUR_KEY_HERE"
+)
+```
+
 ### Collect Card Data
 
+#### Android
 ```kotlin
 // Collect complete card information
 val response = cardSessions.collectCardData(
@@ -52,10 +59,27 @@ val response = cardSessions.collectCardData(
 )
 ```
 
+#### iOS
+```swift
+// Using async/await
+let response = try await cardSessions.collectCardData(
+    cardNumber: "4000000000001091",
+    expiryMonth: "12",
+    expiryYear: "2025",
+    cvn: "123", // Optional
+    cardholderFirstName: "John",
+    cardholderLastName: "Doe",
+    cardholderEmail: "john@example.com",
+    cardholderPhoneNumber: "+1234567890",
+    paymentSessionId: "ps-1234567890"
+)
+```
+
 ### Collect CVN Only
 
 For saved cards where you only need to collect the CVN:
 
+#### Android
 ```kotlin
 val response = cardSessions.collectCvn(
     cvn = "123",
@@ -63,10 +87,17 @@ val response = cardSessions.collectCvn(
 )
 ```
 
+#### iOS
+```swift
+let response = try await cardSessions.collectCvn(
+    cvn: "123",
+    paymentSessionId: "ps-1234567890"
+)
+```
+
 ### Monitor Session State
 
-The SDK provides a StateFlow to monitor the current state of operations:
-
+#### Android
 ```kotlin
 cardSessions.state.collect { state ->
     when {
@@ -75,6 +106,21 @@ cardSessions.state.collect { state ->
         state.cardResponse != null -> // Handle success
     }
 }
+```
+
+#### iOS
+```swift
+// Using Combine
+cardSessions.state
+    .sink { state in
+        if state.isLoading {
+            // Show loading state
+        } else if let error = state.error {
+            // Handle error
+        } else if let response = state.cardResponse {
+            // Handle success
+        }
+    }
 ```
 
 ## Response Types
@@ -107,4 +153,6 @@ The SDK automatically handles:
 ## Requirements
 
 - Android API level 21 or higher
+- iOS 13.0 or higher
+- Swift 5.5 or higher
 

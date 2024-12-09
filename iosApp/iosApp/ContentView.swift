@@ -11,7 +11,7 @@ struct ContentView: View {
     init(appModule: AppModule) {
         self.appModule = appModule
         self.cardSessions = CardSessionsFactory().create(
-            apiKey: "xnd_public_development_1TFSZ1eyExAAhfR48LRlbTIH2WFT6jjvoLDFsjQUV3lJWuNghjCMJakP0hq0ZCV"
+            apiKey: "API_KEY_HERE"
         )
     }
     

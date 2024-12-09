@@ -6,8 +6,6 @@ plugins {
   alias(libs.plugins.hilt)
   alias(libs.plugins.kotlin.serialization)
 }
-
-
 android {
   namespace = "com.cards.session.android"
   compileSdk = 34
@@ -23,18 +21,19 @@ android {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
   }
-  buildTypes {
-    getByName("release") {
-      isMinifyEnabled = false
-    }
-  }
   compileOptions {
+    isCoreLibraryDesugaringEnabled = true
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
   }
   kotlin {
     jvmToolchain(17)
   }
+
+  buildFeatures {
+    buildConfig = true
+  }
+
 }
 
 dependencies {
@@ -65,4 +64,6 @@ dependencies {
 
   kspAndroidTest(libs.hilt.android.compiler)
   androidTestImplementation(libs.hilt.testing)
+
+  coreLibraryDesugaring(libs.android.desugar)
 }

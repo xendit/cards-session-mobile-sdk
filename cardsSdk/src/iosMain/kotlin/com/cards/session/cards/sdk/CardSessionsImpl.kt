@@ -1,5 +1,7 @@
 package com.cards.session.cards.sdk
 
+import cocoapods.XenditFingerprintSDK.FingerprintSDK
+import cocoapods.XenditFingerprintSDK.LogModeAll
 import com.cards.session.cards.models.CardsRequestDto
 import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.cards.models.DeviceFingerprint
@@ -12,15 +14,18 @@ import com.cards.session.util.AuthTokenGenerator
 import com.cards.session.util.Logger
 import com.cardsession.sdk.CreditCardUtil
 import io.ktor.client.HttpClient
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import platform.Foundation.NSLog
 
-internal class CardSessionsImpl private constructor(
+internal class CardSessionsImpl @OptIn(ExperimentalForeignApi::class)
+private constructor(
   private val apiKey: String,
-  private val httpClient: HttpClient
+  private val httpClient: HttpClient,
+  private val fingerprintSDK: FingerprintSDK
 ) : CardSessions {
   private val TAG = "CardSessionsImpl"
   private val logger = Logger(TAG)
@@ -129,17 +134,40 @@ internal class CardSessionsImpl private constructor(
     }
   }
 
+  @OptIn(ExperimentalForeignApi::class)
   private fun getFingerprint(eventName: String): String {
-    // TODO: Implement iOS-specific device fingerprinting
-    return ""
+    fingerprintSDK.scanWithEvent_name(
+      event_name = eventName,
+      event_id = eventName,
+      completion = { response, errorMsg ->
+        if (errorMsg != null) {
+          logger.e("Scan failed for event: $eventName, error: $errorMsg")
+        }
+      }
+    )
+
+    return fingerprintSDK.getSessionId()
   }
 
   companion object {
-    fun create(apiKey: String): CardSessions {
-      Logger("").debugBuild()
+    @OptIn(ExperimentalForeignApi::class)
+    fun create(apiKey: String, isEnableLog: Boolean = false): CardSessions {
+      val fingerprint = FingerprintSDK()
+
+      if (isEnableLog) {
+              Logger("").debugBuild()
+      }
+
+      try {
+        fingerprint.initSDKWithApiKey(apiKey)
+      } catch (e: Exception) {
+//        Logger("CardSessions").e( "Failed to initialize XenditFingerprintSDK", e)
+      }
+
       return CardSessionsImpl(
         apiKey = apiKey,
-        httpClient = HttpClientFactory().create()
+        httpClient = HttpClientFactory().create(),
+        fingerprintSDK = fingerprint
       )
     }
   }

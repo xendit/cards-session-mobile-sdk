@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
 plugins {
   alias(libs.plugins.kotlin.multiplatform)
   alias(libs.plugins.kotlin.native.cocoapods)
@@ -10,15 +12,42 @@ kotlin {
   iosArm64()
   iosSimulatorArm64()
 
+  val xcframeworkName = "cardSdk"
+  val xcFrameworkVersion = "1.0.0"
+  val xcFrameworkBundleVersion = "1" // Increase it everytime version changed
+  val xcf = XCFramework(xcframeworkName)
+
+  listOf(
+    iosX64(),
+    iosArm64(),
+    iosSimulatorArm64(),
+  ).forEach {
+    it.binaries.framework {
+      baseName = xcframeworkName
+
+      // Specify CFBundleIdentifier to uniquely identify the framework
+      binaryOption("bundleId", "com.cards.session.${xcframeworkName}")
+      binaryOption("bundleShortVersionString", xcFrameworkVersion)
+      binaryOption("bundleVersion", xcFrameworkBundleVersion)
+      xcf.add(this)
+      isStatic = true
+    }
+  }
+
   cocoapods {
     summary = "Cards Session SDK module"
     homepage = "Link to the Cards Session Module homepage"
     version = "1.0"
-    ios.deploymentTarget = "16.0"
+    ios.deploymentTarget = "14.0"
     podfile = project.file("../iosApp/Podfile")
     framework {
       baseName = "cardsSdk"
       isStatic = true
+    }
+
+    pod("XenditFingerprintSDK") {
+      version = "1.0.1"
+      extraOpts += listOf("-compiler-option", "-fmodules")
     }
   }
 

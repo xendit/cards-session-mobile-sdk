@@ -7,11 +7,13 @@ struct ContentView: View {
     @State private var isLoading = false
     @State private var error: String?
     @State private var cardResponse: String?
+    @State private var paymentSessionId = ""
     
     init(appModule: AppModule) {
         self.appModule = appModule
         self.cardSessions = CardSessionsFactory().create(
-            apiKey: "API_KEY_HERE"
+            apiKey: "API_KEY_HERE",
+            isEnableLog: true
         )
     }
     
@@ -22,6 +24,13 @@ struct ContentView: View {
             Text("Welcome to Cards Session!")
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
+            
+            VStack(spacing: 8) {
+                Text("paymentSessionId: ")
+                TextField("Key in payment session id", text: $paymentSessionId)
+                    .textFieldStyle(CustomTextFieldStyle())
+                    .keyboardType(.default)
+            }
             
             Button(action: {
                 Task {
@@ -36,8 +45,8 @@ struct ContentView: View {
                             cardholderFirstName: "First",
                             cardholderLastName: "Name",
                             cardholderEmail: "firstname@xendit.co",
-                            cardholderPhoneNumber: "01231245242",
-                            paymentSessionId: "ps-1234567890abcdef12345678"
+                            cardholderPhoneNumber: "+123456789",
+                            paymentSessionId: paymentSessionId
                         )
                         cardResponse = response.description
                     } catch {
@@ -56,7 +65,7 @@ struct ContentView: View {
                     do {
                         let response = try await cardSessions.collectCvn(
                             cvn: "123",
-                            paymentSessionId: "ps-1234567890abcdef12345678"
+                            paymentSessionId: paymentSessionId
                         )
                         cardResponse = response.description
                     } catch {
@@ -82,6 +91,3 @@ struct ContentView: View {
         .padding()
     }
 }
-
-
-

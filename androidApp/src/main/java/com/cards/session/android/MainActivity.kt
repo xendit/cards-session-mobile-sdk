@@ -60,6 +60,7 @@ fun AppRoot() {
   }
   val state by cardSessions.state.collectAsState()
   val scope = CoroutineScope(Dispatchers.Main)
+  var paymentSessionId = ""
 
   NavHost(
     navController = navController,
@@ -78,6 +79,19 @@ fun AppRoot() {
           textAlign = TextAlign.Center,
           modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        CustomTextField(
+          label = "Enter paymentSessionId",
+          placeholder = "paymentSessionId",
+          onValueChange = { newText ->
+            // Handle text change here
+            paymentSessionId = newText
+            println("New text: $newText")
+          }
+        )
+
         Spacer(modifier = Modifier.height(16.dp))
         Button(
           content = { Text(text = "Collect Card Data") },
@@ -91,8 +105,8 @@ fun AppRoot() {
                 cardholderFirstName = "First",
                 cardholderLastName = "Name",
                 cardholderEmail = "firstname@xendit.co",
-                cardholderPhoneNumber = "01231245242",
-                paymentSessionId = "ps-1234567890abcdef12345678"
+                cardholderPhoneNumber = "+123456789",
+                paymentSessionId = paymentSessionId
               )
             }
           }
@@ -104,7 +118,7 @@ fun AppRoot() {
             scope.launch {
               cardSessions.collectCvn(
                 cvn = "123",
-                paymentSessionId = "ps-1234567890abcdef12345678"
+                paymentSessionId = paymentSessionId
               )
             }
           }

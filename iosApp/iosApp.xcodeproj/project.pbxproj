@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		0C0CDBC02D06AD03002DC16A /* CardSessionsImpl.kt in Resources */ = {isa = PBXBuildFile; fileRef = 0C0CDBBE2D06AD03002DC16A /* CardSessionsImpl.kt */; };
 		0C0CDBC62D06DB5C002DC16A /* CardSessions.kt in Resources */ = {isa = PBXBuildFile; fileRef = 0C0CDBC52D06DB5C002DC16A /* CardSessions.kt */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
+		21FA6F202D0997E600DD5E13 /* CustomTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FA6F1F2D0997E600DD5E13 /* CustomTextFieldStyle.swift */; };
 		2F9A03F732FC062E0B94E281 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E47D7C75F016D7EF416763 /* Pods_iosApp.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -22,6 +23,7 @@
 		0C0CDBBE2D06AD03002DC16A /* CardSessionsImpl.kt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CardSessionsImpl.kt; path = ../cardsSdk/src/iosMain/kotlin/com/cards/session/cards/sdk/CardSessionsImpl.kt; sourceTree = SOURCE_ROOT; };
 		0C0CDBC52D06DB5C002DC16A /* CardSessions.kt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CardSessions.kt; path = ../cardsSdk/src/commonMain/kotlin/com/cards/session/cards/sdk/CardSessions.kt; sourceTree = SOURCE_ROOT; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		21FA6F1F2D0997E600DD5E13 /* CustomTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldStyle.swift; sourceTree = "<group>"; };
 		42AF08E65F4330F0220806A5 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				0C0CDBBE2D06AD03002DC16A /* CardSessionsImpl.kt */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
+				21FA6F1F2D0997E600DD5E13 /* CustomTextFieldStyle.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
@@ -110,6 +113,7 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				50F90884C22C0FEF776BD342 /* Frameworks */,
+				0321158BB61A2C062DF08FCD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -168,6 +172,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0321158BB61A2C062DF08FCD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		87FCF521B92BEDD427DAB3FE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -199,6 +220,7 @@
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				21FA6F202D0997E600DD5E13 /* CustomTextFieldStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

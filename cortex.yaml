@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  title: xendit-cards-sdk
+  title: cards-session-mobile-sdk
   description: 
   x-cortex-git:
     github:
-      repository: xendit/xendit-cards-sdk
-  x-cortex-tag: xendit-cards-sdk
+      repository: xendit/cards-session-mobile-sdk
+  x-cortex-tag: cards-session-mobile-sdk
   x-cortex-dependency: []
   x-cortex-service-groups:
     - P2

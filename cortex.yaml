@@ -14,7 +14,7 @@ info:
     - type: EMAIL
       email: shaun@xendit.co
     - type: GROUP
-      name: xendit-charge
+      name: xendit/charge
     - type: GROUP
-      name: xendit-cards-production
+      name: xendit/cards-production
     

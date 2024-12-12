@@ -7,7 +7,7 @@ struct ContentView: View {
     @State private var isLoading = false
     @State private var error: String?
     @State private var cardResponse: String?
-    @State private var paymentSessionId = "ps-1234567890abcdef12345678"
+    @State private var paymentSessionId = ""
     
     init(appModule: AppModule) {
         self.appModule = appModule

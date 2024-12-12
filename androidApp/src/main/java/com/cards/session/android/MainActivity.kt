@@ -60,7 +60,7 @@ fun AppRoot() {
   }
   val state by cardSessions.state.collectAsState()
   val scope = CoroutineScope(Dispatchers.Main)
-  var paymentSessionId = "ps-1234567890abcdef12345678"
+  var paymentSessionId = ""
 
   NavHost(
     navController = navController,

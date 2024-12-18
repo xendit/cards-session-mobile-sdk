@@ -215,3 +215,8 @@ tasks.withType<Sign>().configureEach {
     enabled = false
   }
 }
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications)
+}

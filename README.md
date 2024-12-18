@@ -18,7 +18,7 @@ Add the following to your app's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.xendit:cards-sdk:1.0.0") // Replace with actual version
+    implementation("com.xendit:cardsSdk:1.0.0") // Replace with latest version
 }
 ```
 

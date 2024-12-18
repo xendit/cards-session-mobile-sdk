@@ -1,10 +1,14 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
   alias(libs.plugins.kotlin.multiplatform)
   alias(libs.plugins.kotlin.native.cocoapods)
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.serialization)
+  `maven-publish`
+  signing
 }
 kotlin {
   androidTarget()
@@ -135,4 +139,73 @@ android {
 
 dependencies {
   coreLibraryDesugaring(libs.android.desugar)
+}
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        load(FileInputStream(localPropertiesFile))
+    }
+}
+
+fun getProperty(propertyName: String): String {
+    return localProperties.getProperty(propertyName) ?: System.getenv(propertyName) ?: ""
+}
+
+publishing {
+  val sonatypeUsername = getProperty("SONATYPE_USERNAME")
+  val sonatypePassword = getProperty("SONATYPE_PASSWORD")
+  publications {
+    create<MavenPublication>("release") {
+      groupId = "com.xendit"
+      artifactId = "cards-sdk"
+      version = "1.0.0"
+
+      pom {
+        name.set("Xendit Cards SDK")
+        description.set("A lightweight SDK for card sessions into Android and iOS applications")
+        url.set("https://github.com/xendit/xendit-cards-sdk")
+
+        licenses {
+          license {
+            name.set("MIT License")
+            url.set("https://opensource.org/licenses/MIT")
+          }
+        }
+        
+        developers {
+          developer {
+            id.set("cards")
+            name.set("Xendit Cards")
+            email.set("cards@xendit.co")
+          }
+        }
+        
+        scm {
+          connection.set("scm:git:git://github.com/xendit/xendit-cards-sdk.git")
+          developerConnection.set("scm:git:ssh://github.com/xendit/xendit-cards-sdk.git")
+          url.set("https://github.com/xendit/xendit-cards-sdk")
+        }
+      }
+    }
+  }
+
+  repositories {
+    maven {
+      name = "OSSRH"
+      val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+      val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+      url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
+      
+      credentials {
+        username = sonatypeUsername
+        password = sonatypePassword
+      }
+    }
+  }
+}
+
+signing {
+  useGpgCmd()
+  sign(publishing.publications)
 }

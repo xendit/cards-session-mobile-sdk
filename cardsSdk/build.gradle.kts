@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
   alias(libs.plugins.kotlin.multiplatform)
@@ -149,7 +149,9 @@ val localProperties = Properties().apply {
 }
 
 fun getProperty(propertyName: String): String {
-  return localProperties.getProperty(propertyName) ?: System.getenv(propertyName) ?: ""
+  return localProperties.getProperty(propertyName)
+    ?: System.getenv(propertyName)
+    ?: ""
 }
 
 publishing {
@@ -217,6 +219,8 @@ tasks.withType<Sign>().configureEach {
 }
 
 signing {
-    useGpgCmd()
-    sign(publishing.publications)
+  val signingPassword = getProperty("SIGNING_PASSWORD")
+  val signingKey = getProperty("GPG_SIGNING_KEY")
+  useInMemoryPgpKeys(signingKey, signingPassword)
+  sign(publishing.publications)
 }

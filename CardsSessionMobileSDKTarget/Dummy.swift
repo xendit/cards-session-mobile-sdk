@@ -1,0 +1,2 @@
+//https://forums.swift.org/t/swiftpm-binary-target-with-sub-dependencies/40197/7
+//NOTE: Without commiting the dummy source file for the stub target to the repo with the manifest, the libSwiftPM just thrown an error about missing source files.

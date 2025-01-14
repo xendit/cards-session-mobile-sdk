@@ -3,7 +3,7 @@
 
 # Configuration
 GITHUB_REPO="xendit/cards-session-mobile-sdk"
-GITHUB_TOKEN="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"
+GITHUB_TOKEN="your_github_token"
 
 # Colors for output
 GREEN='\033[0;32m'

@@ -22,6 +22,29 @@ dependencies {
 }
 ```
 
+### iOS - Cocoapod
+
+Add the following to your app's `Podfile`:
+
+```ruby
+pod 'CardSessionMobileSDK', '~> 1.0.0'
+```
+
+**Important:** Import SDK in your project with CocoaPods integration, you can do as following
+
+```swift
+import cardsSdk
+```
+### iOS - Swift Package Manager
+
+In XCode go to `File` -> `Add Packages...` and provide URL to this repository in the search bar. Choose `Dependency Role` and select apropriate project. 
+
+**Important:** Import SDK in your project with Swift Package Manager integration, you can do as following
+
+```swift
+import cardsSdk
+```
+
 ## Usage
 
 ### Initialize the SDK

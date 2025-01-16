@@ -219,8 +219,9 @@ tasks.withType<Sign>().configureEach {
 }
 
 signing {
-  val signingPassword = getProperty("SIGNING_PASSWORD")
-  val signingKey = getProperty("GPG_SIGNING_KEY")
-  useInMemoryPgpKeys(signingKey, signingPassword)
-  sign(publishing.publications)
+    sign(publishing.publications)
 }
+
+ext["signing.keyId"] = getProperty("signing.keyId")
+ext["signing.password"] = getProperty("signing.password")
+ext["signing.secretKeyRingFile"] = project.rootProject.file("secring.gpg").absolutePath

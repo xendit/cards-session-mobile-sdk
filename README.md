@@ -18,7 +18,7 @@ Add the following to your app's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.xendit:cards-sdk:1.0.0") // Replace with actual version
+    implementation("com.xendit:cardsSdk:1.0.1")
 }
 ```
 
@@ -125,7 +125,7 @@ let response = try await cardSessions.collectCvn(
 cardSessions.state.collect { state ->
     when {
         state.isLoading -> // Show loading state
-        state.error != null -> // Handle error
+        state.exception != null -> // Handle exception
         state.cardResponse != null -> // Handle success
     }
 }
@@ -138,8 +138,8 @@ cardSessions.state
     .sink { state in
         if state.isLoading {
             // Show loading state
-        } else if let error = state.error {
-            // Handle error
+        } else if let exception = state.exception {
+            // Handle exception
         } else if let response = state.cardResponse {
             // Handle success
         }

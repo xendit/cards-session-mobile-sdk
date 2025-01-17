@@ -1,0 +1,35 @@
+name: Publish to Maven Central
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+        
+      - name: Publish to Maven Central
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          signing.keyId: ${{ secrets.SIGNING_KEY_ID }}
+          signing.password: ${{ secrets.SIGNING_PASSWORD }}
+          signing.secretKeyRingFile: secring.gpg
+        run: |
+          ./gradlew :cardsSdk:publish --no-daemon --no-parallel
+          ./gradlew closeAndReleaseRepository 

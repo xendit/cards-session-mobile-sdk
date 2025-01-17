@@ -1,12 +1,16 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFrameworkTask
 import java.nio.file.Files
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
   alias(libs.plugins.kotlin.multiplatform)
   alias(libs.plugins.kotlin.native.cocoapods)
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.serialization)
+  `maven-publish`
+  signing
 }
 kotlin {
   androidTarget()
@@ -191,3 +195,86 @@ tasks.named<XCFrameworkTask>("podPublishReleaseXCFramework") {
   finalizedBy("copyPrivacyInfoToFrameworks")
 }
 
+
+val localProperties = Properties().apply {
+  val localPropertiesFile = rootProject.file("local.properties")
+  if (localPropertiesFile.exists()) {
+    load(FileInputStream(localPropertiesFile))
+  }
+}
+
+fun getProperty(propertyName: String): String {
+  return localProperties.getProperty(propertyName)
+    ?: System.getenv(propertyName)
+    ?: ""
+}
+
+publishing {
+  val sonatypeUsername = getProperty("SONATYPE_USERNAME")
+  val sonatypePassword = getProperty("SONATYPE_PASSWORD")
+  publications.withType<MavenPublication> {
+    groupId = "com.xendit"
+    version = "1.0.1"
+
+    pom {
+      name.set("Xendit Cards SDK")
+      description.set("A lightweight SDK for card sessions into Android and iOS applications")
+      url.set("https://github.com/xendit/xendit-cards-sdk")
+
+      licenses {
+        license {
+          name.set("MIT License")
+          url.set("https://opensource.org/licenses/MIT")
+        }
+      }
+
+      developers {
+        developer {
+          id.set("cards")
+          name.set("Xendit Cards")
+          email.set("cards@xendit.co")
+        }
+      }
+
+      scm {
+        connection.set("scm:git:git://github.com/xendit/xendit-cards-sdk.git")
+        developerConnection.set("scm:git:ssh://github.com/xendit/xendit-cards-sdk.git")
+        url.set("https://github.com/xendit/xendit-cards-sdk")
+      }
+    }
+  }
+
+  repositories {
+    maven {
+      name = "OSSRH"
+      val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+      val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+      url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
+
+      credentials {
+        username = sonatypeUsername
+        password = sonatypePassword
+      }
+    }
+  }
+}
+
+tasks.withType<PublishToMavenRepository>().configureEach {
+  dependsOn(tasks.named("generateMetadataFileForKotlinMultiplatformPublication"))
+  enabled = !(publication?.name?.contains("ios", ignoreCase = true) ?: false)
+}
+
+tasks.withType<Sign>().configureEach {
+  val targetName = name
+  if (targetName.contains("ios", ignoreCase = true)) {
+    enabled = false
+  }
+}
+
+signing {
+    sign(publishing.publications)
+}
+
+ext["signing.keyId"] = getProperty("signing.keyId")
+ext["signing.password"] = getProperty("signing.password")
+ext["signing.secretKeyRingFile"] = project.rootProject.file("secring.gpg").absolutePath

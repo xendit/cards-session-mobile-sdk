@@ -27,8 +27,9 @@ jobs:
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          signing.keyId: ${{ secrets.SIGNING_KEY_ID }}
+          signing.password: ${{ secrets.SIGNING_PASSWORD }}
+          signing.secretKeyRingFile: secring.gpg
         run: |
           ./gradlew :cardsSdk:publish --no-daemon --no-parallel
           ./gradlew closeAndReleaseRepository 

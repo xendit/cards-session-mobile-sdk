@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFrameworkTask
+import java.nio.file.Files
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -16,7 +18,7 @@ kotlin {
   iosArm64()
   iosSimulatorArm64()
 
-  val xcframeworkName = "cardSdk"
+  val xcframeworkName = "cardsSdk"
   val xcFrameworkVersion = "1.0.0"
   val xcFrameworkBundleVersion = "1" // Increase it everytime version changed
   val xcf = XCFramework(xcframeworkName)
@@ -40,9 +42,13 @@ kotlin {
 
   cocoapods {
     summary = "Cards Session SDK module"
-    homepage = "Link to the Cards Session Module homepage"
-    version = "1.0"
+    homepage = "https://github.com/xendit/cards-session-mobile-sdk"
+    version = "1.0.0"
+    license = "{ :type => 'MIT', :text => 'License text'}"
     ios.deploymentTarget = "14.0"
+    source = "{\n" +
+        "    http: 'PUT THE URL Github Asset here'\n" +
+        "  }"
     podfile = project.file("../iosApp/Podfile")
     framework {
       baseName = "cardsSdk"
@@ -140,6 +146,55 @@ android {
 dependencies {
   coreLibraryDesugaring(libs.android.desugar)
 }
+
+interface Injected {
+  @get:Inject val fs: FileSystemOperations
+}
+
+// Define a custom task type to handle the file copying
+abstract class CopyPrivacyInfoTask : DefaultTask(), Injected {
+  @get:InputFiles
+  abstract val xcframeworkOutputs: ConfigurableFileCollection
+
+  @get:InputFile
+  abstract val privacyFile: RegularFileProperty
+
+  @get:OutputDirectory
+  abstract val outputDir: DirectoryProperty
+
+  @TaskAction
+  fun copy() {
+    val xcframework = xcframeworkOutputs.first().toPath()
+    Files.find(xcframework, 2, { path, _ ->
+      val isFramework = path.fileName.toString().endsWith(".framework")
+      val destination = path.getName(path.count() - 2).fileName.toString()
+      val isIOS = destination.startsWith("ios-")
+      isFramework && isIOS
+    }).forEach { framework ->
+      fs.copy {
+        from(privacyFile)
+        into(framework)
+      }
+    }
+  }
+}
+
+// Register the custom task
+tasks.register<CopyPrivacyInfoTask>("copyPrivacyInfoToFrameworks") {
+  val xcframeworkTask = tasks.named<XCFrameworkTask>("podPublishReleaseXCFramework")
+  xcframeworkOutputs.from(xcframeworkTask.map { it.outputs.files })
+  privacyFile.set(project.file("PrivacyInfo.xcprivacy"))
+  outputDir.set(layout.buildDirectory.dir("xcframework"))
+
+  // Make this task run after XCFramework task
+  dependsOn(xcframeworkTask)
+}
+
+// Make XCFramework task finalized by our copy task
+tasks.named<XCFrameworkTask>("podPublishReleaseXCFramework") {
+  finalizedBy("copyPrivacyInfoToFrameworks")
+}
+
 
 val localProperties = Properties().apply {
   val localPropertiesFile = rootProject.file("local.properties")

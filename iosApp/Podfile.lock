@@ -1,5 +1,5 @@
 PODS:
-  - cardsSdk (1.0):
+  - cardsSdk (1.0.0):
     - XenditFingerprintSDK (= 1.0.1)
   - XenditFingerprintSDK (1.0.1)
 
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../cardsSdk"
 
 SPEC CHECKSUMS:
-  cardsSdk: 9e0b4e91658434b731daf4d2262393018fe4f742
+  cardsSdk: 6cf53581e3f04db427f8dd0700d1c11e78eac652
   XenditFingerprintSDK: 29410a2dcf467fe33d6e0167f590deae47c753ee
 
 PODFILE CHECKSUM: 2d3ff3b1724835dab0bcce0b112c67a9f1440453

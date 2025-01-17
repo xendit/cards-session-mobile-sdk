@@ -1,10 +1,10 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'cardsSdk'
-    spec.version                  = '1.0'
-    spec.homepage                 = 'Link to the Cards Session Module homepage'
+    spec.version                  = '1.0.0'
+    spec.homepage                 = 'https://github.com/xendit/cards-session-mobile-sdk'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
-    spec.license                  = ''
+    spec.license                  = { :type => 'MIT', :text => 'License text'}
     spec.summary                  = 'Cards Session SDK module'
     spec.vendored_frameworks      = 'build/cocoapods/framework/cardsSdk.framework'
     spec.libraries                = 'c++'

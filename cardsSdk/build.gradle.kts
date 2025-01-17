@@ -205,10 +205,8 @@ publishing {
 }
 
 tasks.withType<PublishToMavenRepository>().configureEach {
-  val targetName = publication.name
-  if (targetName.contains("ios", ignoreCase = true)) {
-    enabled = false
-  }
+  dependsOn(tasks.named("generateMetadataFileForKotlinMultiplatformPublication"))
+  enabled = !(publication?.name?.contains("ios", ignoreCase = true) ?: false)
 }
 
 tasks.withType<Sign>().configureEach {

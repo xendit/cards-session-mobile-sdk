@@ -12,9 +12,9 @@ class CardsResponse {
 
 class XenditCardsPlugin {
   static const MethodChannel _channel = MethodChannel('xendit_cards_plugin');
-  
+
   final String apiKey;
-  
+
   XenditCardsPlugin({this.apiKey = ''});
 
   Future<CardsResponse> collectCardData({

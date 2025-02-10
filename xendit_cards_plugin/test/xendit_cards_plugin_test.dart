@@ -6,13 +6,13 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockXenditCardsPluginPlatform
     with MockPlatformInterfaceMixin
     implements XenditCardsPluginPlatform {
-
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 }
 
 void main() {
-  final XenditCardsPluginPlatform initialPlatform = XenditCardsPluginPlatform.instance;
+  final XenditCardsPluginPlatform initialPlatform =
+      XenditCardsPluginPlatform.instance;
 
   test('$MethodChannelXenditCardsPlugin is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelXenditCardsPlugin>());

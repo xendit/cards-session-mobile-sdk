@@ -15,11 +15,9 @@ import 'package:xendit_cards_plugin/xendit_cards_plugin.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    final XenditCardsPlugin plugin = XenditCardsPlugin();
-    final String? version = await plugin.getPlatformVersion();
-    // The version string depends on the host platform running the test, so
-    // just assert that some non-empty string is returned.
-    expect(version?.isNotEmpty, true);
+  testWidgets('Card session test', (WidgetTester tester) async {
+    final plugin = XenditCardsPlugin(apiKey: 'test_key');
+    // Add your card session integration tests here
+    expect(plugin.apiKey, 'test_key');
   });
 }

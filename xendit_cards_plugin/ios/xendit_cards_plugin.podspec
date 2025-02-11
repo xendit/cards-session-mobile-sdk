@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
   s.name             = 'xendit_cards_plugin'
   s.version          = '1.0.0'
-  s.homepage         = 'https://github.com/xendit/xendit-cards-plugin'
+  s.homepage         = 'https://github.com/xendit/cards-session-mobile-sdk'
   s.source           = { :path => '.' }
   s.author           = { 'Xendit' => 'support@xendit.co' }
   s.license          = { :type => 'MIT', :text => 'License text'}

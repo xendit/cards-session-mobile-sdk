@@ -1,7 +1,7 @@
 name: xendit_cards_plugin
 description: "Flutter plugin for integrating Xendit Cards SDK"
 version: 1.0.0
-homepage: "https://github.com/xendit/xendit-cards-plugin"
+homepage: "https://github.com/xendit/cards-session-mobile-sdk"
 
 environment:
   sdk: ^3.6.2

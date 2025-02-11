@@ -1,0 +1,41 @@
+PODS:
+  - cardsSdk (1.0.0):
+    - XenditFingerprintSDK (= 1.0.1)
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - xendit_cards_plugin (1.0.0):
+    - cardsSdk (= 1.0.0)
+    - Flutter
+  - XenditFingerprintSDK (1.0.1)
+
+DEPENDENCIES:
+  - cardsSdk (from `../../../cardsSdk`)
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - xendit_cards_plugin (from `.symlinks/plugins/xendit_cards_plugin/ios`)
+
+SPEC REPOS:
+  trunk:
+    - XenditFingerprintSDK
+
+EXTERNAL SOURCES:
+  cardsSdk:
+    :path: "../../../cardsSdk"
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  xendit_cards_plugin:
+    :path: ".symlinks/plugins/xendit_cards_plugin/ios"
+
+SPEC CHECKSUMS:
+  cardsSdk: 2bf9f8b506f6a9898613dcc6dcea91940d8bcc09
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+  xendit_cards_plugin: 678eef62685706e9227f36a56c9fbe28bdef03b8
+  XenditFingerprintSDK: 29410a2dcf467fe33d6e0167f590deae47c753ee
+
+PODFILE CHECKSUM: 5d7bfb2f68324173c9e17b6514f784d6c0a655d0
+
+COCOAPODS: 1.16.2

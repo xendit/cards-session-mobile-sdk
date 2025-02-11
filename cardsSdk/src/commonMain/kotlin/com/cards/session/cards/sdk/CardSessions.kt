@@ -16,7 +16,8 @@ interface CardSessions {
         cardholderLastName: String,
         cardholderEmail: String,
         cardholderPhoneNumber: String,
-        paymentSessionId: String
+        paymentSessionId: String,
+        confirmSave: Boolean = false
     ): CardsResponseDto
 
     suspend fun collectCvn(

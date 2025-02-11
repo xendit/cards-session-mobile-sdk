@@ -28,7 +28,7 @@ class CardsSessionScreen extends StatefulWidget {
 }
 
 class _CardsSessionScreenState extends State<CardsSessionScreen> {
-  final _xenditCardsPlugin = XenditCardsPlugin();
+  final _xenditCardsPlugin = XenditCardsPlugin(apiKey: 'xnd_public_development_YOUR_KEY_HERE');
   final _paymentSessionIdController = TextEditingController();
   String? _responseMessage;
   bool _isLoading = false;

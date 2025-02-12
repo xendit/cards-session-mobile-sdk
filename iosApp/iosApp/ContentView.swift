@@ -8,7 +8,8 @@ struct ContentView: View {
     @State private var error: String?
     @State private var cardResponse: String?
     @State private var paymentSessionId = ""
-    
+    @State private var isConfirmedSaved = false
+
     init(appModule: AppModule) {
         self.appModule = appModule
         self.cardSessions = CardSessionsFactory().create(
@@ -30,6 +31,11 @@ struct ContentView: View {
                 TextField("Key in payment session id", text: $paymentSessionId)
                     .textFieldStyle(CustomTextFieldStyle())
                     .keyboardType(.default)
+                HStack(spacing: 8) {
+                    Text("Confirm Save")
+                        .bold()
+                    Toggle("", isOn: $isConfirmedSaved)
+                }
             }
             
             Button(action: {
@@ -46,7 +52,8 @@ struct ContentView: View {
                             cardholderLastName: "Name",
                             cardholderEmail: "firstname@xendit.co",
                             cardholderPhoneNumber: "+123456789",
-                            paymentSessionId: paymentSessionId
+                            paymentSessionId: paymentSessionId,
+                            confirmSave: isConfirmedSaved
                         )
                         cardResponse = response.description
                     } catch {

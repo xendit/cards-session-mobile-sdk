@@ -27,7 +27,7 @@ dependencies {
 Add the following to your app's `Podfile`:
 
 ```ruby
-pod 'CardSessionMobileSDK', '~> 1.0.0'
+pod 'CardSessionMobileSDK', '~> 1.0.1'
 ```
 
 **Important:** Import SDK in your project with CocoaPods integration, you can do as following
@@ -78,7 +78,8 @@ val response = cardSessions.collectCardData(
     cardholderLastName = "Doe",
     cardholderEmail = "john@example.com",
     cardholderPhoneNumber = "+1234567890",
-    paymentSessionId = "ps-1234567890" // Session ID from your backend
+    paymentSessionId = "ps-1234567890", // Session ID from your backend
+    confirmSave = true // Optional, default to false
 )
 ```
 
@@ -94,7 +95,8 @@ let response = try await cardSessions.collectCardData(
     cardholderLastName: "Doe",
     cardholderEmail: "john@example.com",
     cardholderPhoneNumber: "+1234567890",
-    paymentSessionId: "ps-1234567890"
+    paymentSessionId: "ps-1234567890",
+    confirmSave = true // Optional, default to false
 )
 ```
 

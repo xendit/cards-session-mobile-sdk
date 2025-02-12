@@ -42,7 +42,8 @@ private constructor(
     cardholderLastName: String,
     cardholderEmail: String,
     cardholderPhoneNumber: String,
-    paymentSessionId: String
+    paymentSessionId: String,
+    confirmSave: Boolean
   ): CardsResponseDto {
     _state.update { it.copy(isLoading = true, exception = null) }
 
@@ -73,6 +74,7 @@ private constructor(
         cardholderEmail = cardholderEmail,
         cardholderPhoneNumber = cardholderPhoneNumber,
         paymentSessionId = paymentSessionId,
+        confirmSave = confirmSave,
         device = DeviceFingerprint(deviceFingerprint)
       )
 

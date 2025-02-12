@@ -27,7 +27,7 @@ dependencies {
 Add the following to your app's `Podfile`:
 
 ```ruby
-pod 'CardSessionMobileSDK', '~> 1.0.0'
+pod 'CardSessionMobileSDK', '~> 1.0.1'
 ```
 
 **Important:** Import SDK in your project with CocoaPods integration, you can do as following

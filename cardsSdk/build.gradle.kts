@@ -19,8 +19,8 @@ kotlin {
   iosSimulatorArm64()
 
   val xcframeworkName = "cardsSdk"
-  val xcFrameworkVersion = "1.0.0"
-  val xcFrameworkBundleVersion = "1" // Increase it everytime version changed
+  val xcFrameworkVersion = "1.0.1"
+  val xcFrameworkBundleVersion = "2" // Increase it everytime version changed
   val xcf = XCFramework(xcframeworkName)
 
   listOf(

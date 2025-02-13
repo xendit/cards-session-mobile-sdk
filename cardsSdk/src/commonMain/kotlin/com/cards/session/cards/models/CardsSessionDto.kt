@@ -24,6 +24,9 @@ data class CardsRequestDto(
   // required for collectCvn()
   val cvn: String? = null,
 
+  @SerialName("confirm_save")
+  val confirmSave: Boolean? = false,
+
   @SerialName("payment_session_id")
   val paymentSessionId: String,
   val device: DeviceFingerprint

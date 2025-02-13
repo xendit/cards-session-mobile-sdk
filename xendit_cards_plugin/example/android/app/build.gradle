@@ -7,15 +7,15 @@ plugins {
 
 android {
     namespace 'com.example.xendit_cards_plugin_example'
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId 'com.example.xendit_cards_plugin_example'
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk 21
-        targetSdk 34
+        minSdk = 21
+        targetSdk = 35
         versionCode 1
         versionName "1.0.0"
     }
@@ -25,7 +25,11 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
-            isMinifyEnabled false
+            
+            // Disable both shrinking features
+            minifyEnabled false    // No code shrinking
+            shrinkResources false  // No resource shrinking
+            
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -33,6 +37,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
+        
+        coreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -46,4 +52,5 @@ flutter {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }

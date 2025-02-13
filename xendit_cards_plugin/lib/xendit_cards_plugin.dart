@@ -27,6 +27,7 @@ class XenditCardsPlugin {
     required String email,
     required String phoneNumber,
     required String paymentSessionId,
+    bool confirmSave = false,
   }) async {
     try {
       final result = await _channel.invokeMethod('collectCardData', {
@@ -40,6 +41,7 @@ class XenditCardsPlugin {
         'cardholderPhoneNumber': phoneNumber,
         'paymentSessionId': paymentSessionId,
         'apiKey': apiKey,
+        'confirmSave': confirmSave,
       });
 
       return CardsResponse(message: result.toString());

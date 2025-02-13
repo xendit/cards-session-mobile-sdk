@@ -33,6 +33,7 @@ class _CardsSessionScreenState extends State<CardsSessionScreen> {
   String? _responseMessage;
   bool _isLoading = false;
   String? _errorMessage;
+  bool _confirmSave = false;
 
   Future<void> _collectCardData() async {
     if (_paymentSessionIdController.text.isEmpty) {
@@ -58,6 +59,7 @@ class _CardsSessionScreenState extends State<CardsSessionScreen> {
         email: 'firstname@xendit.co',
         phoneNumber: '+123456789',
         paymentSessionId: _paymentSessionIdController.text,
+        confirmSave: _confirmSave,
       );
 
       setState(() {
@@ -132,6 +134,24 @@ class _CardsSessionScreenState extends State<CardsSessionScreen> {
                 hintText: 'paymentSessionId',
                 border: OutlineInputBorder(),
               ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                const Text(
+                  'Confirm Save',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(width: 8),
+                Switch(
+                  value: _confirmSave,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _confirmSave = value;
+                    });
+                  },
+                ),
+              ],
             ),
             const SizedBox(height: 16),
             ElevatedButton(

@@ -61,7 +61,7 @@ fun AppRoot() {
   val cardSessions = remember {
     CardSessions.create(
       context = context,
-      apiKey = "API_KEY_HERE"
+      apiKey = "xnd_public_development_YOUR_KEY_HERE"
     )
   }
   val state by cardSessions.state.collectAsState()

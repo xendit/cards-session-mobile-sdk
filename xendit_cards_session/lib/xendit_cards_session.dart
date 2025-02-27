@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'src/models/cards_session_dto.dart';
+import 'src/network/cards_client.dart';
+import 'src/network/cards_session_exception.dart';
 
 // Export utility classes
 export 'src/utils/credit_card_util.dart';
@@ -50,6 +54,8 @@ class CardSessionState {
 class XenditCardsSession {
   static const MethodChannel _channel = MethodChannel('xendit_cards_session');
   final _stateController = StreamController<CardSessionState>.broadcast();
+  final _cardsClient = CardsClient();
+  String? _apiKey;
 
   Stream<CardSessionState> get state => _stateController.stream;
   CardSessionState _currentState = CardSessionState();
@@ -66,6 +72,7 @@ class XenditCardsSession {
   Future<void> initialize({required String apiKey}) async {
     try {
       _updateState(isLoading: true);
+      _apiKey = apiKey;
       await _channel.invokeMethod('initialize', {'apiKey': apiKey});
       _updateState(isLoading: false);
     } catch (e) {
@@ -180,9 +187,73 @@ class XenditCardsSession {
           );
         }
         break;
+      case 'makeApiRequest':
+        // Handle API requests from native code
+        final Map<String, dynamic> arguments = Map<String, dynamic>.from(call.arguments);
+        final String method = arguments['method'];
+        final String payload = arguments['payload'];
+        final String? apiKey = arguments['apiKey'];
+        
+        if (apiKey == null || apiKey.isEmpty) {
+          return {'error': 'API key is not set'};
+        }
+        
+        try {
+          // Parse the payload from JSON
+          final Map<String, dynamic> payloadMap = jsonDecode(payload);
+          
+          // Create the request DTO
+          final request = _createRequestDto(payloadMap);
+          
+          // Make the API call
+          final response = await _cardsClient.paymentWithSession(request, apiKey);
+          
+          // Convert the response to a map
+          return {
+            'message': response.message,
+            'payment_token_id': response.paymentTokenId,
+            'action_url': response.actionUrl,
+          };
+        } catch (e) {
+          if (e is CardsSessionException) {
+            return {
+              'error_code': e.errorCode.toString(),
+              'message': e.message,
+            };
+          } else {
+            return {
+              'error_code': 'unknown_error',
+              'message': e.toString(),
+            };
+          }
+        }
+        break;
       default:
         break;
     }
+  }
+  
+  CardsRequestDto _createRequestDto(Map<String, dynamic> payload) {
+    // Extract device fingerprint
+    final deviceData = payload['device'] as Map<String, dynamic>;
+    final deviceFingerprint = DeviceFingerprint(
+      fingerprint: deviceData['fingerprint'] as String,
+    );
+    
+    // Create the request DTO
+    return CardsRequestDto(
+      cardNumber: payload['card_number'] as String?,
+      expiryMonth: payload['expiry_month'] as String?,
+      expiryYear: payload['expiry_year'] as String?,
+      cvn: payload['cvn'] as String?,
+      cardholderFirstName: payload['cardholder_first_name'] as String?,
+      cardholderLastName: payload['cardholder_last_name'] as String?,
+      cardholderEmail: payload['cardholder_email'] as String?,
+      cardholderPhoneNumber: payload['cardholder_phone_number'] as String?,
+      confirmSave: payload['confirm_save'] as bool?,
+      paymentSessionId: payload['payment_session_id'] as String,
+      device: deviceFingerprint,
+    );
   }
 
   void dispose() {

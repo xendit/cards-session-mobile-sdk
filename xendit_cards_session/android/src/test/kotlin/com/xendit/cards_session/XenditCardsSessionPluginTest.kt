@@ -1,8 +1,8 @@
-package com.example.xendit_cards_session
+package com.xendit.cards_session
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import kotlin.test.Test
+import org.junit.Test
 import org.mockito.Mockito
 
 /*
@@ -24,4 +24,4 @@ internal class XenditCardsSessionPluginTest {
 
     Mockito.verify(mockResult).success("Android " + android.os.Build.VERSION.RELEASE)
   }
-}
+} 

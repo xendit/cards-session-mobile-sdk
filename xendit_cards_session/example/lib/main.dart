@@ -48,7 +48,7 @@ class _CardsSessionPageState extends State<CardsSessionPage> {
   }
 
   Future<void> _initializeSDK() async {
-    await _xenditCardsSession.initialize(apiKey: "API_KEY_HERE");
+    await _xenditCardsSession.initialize(apiKey: "xnd_public_development_YOUR_KEY_HERE");
   }
 
   @override

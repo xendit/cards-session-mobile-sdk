@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'src/models/cards_session_dto.dart';
 import 'src/network/cards_client.dart';
 import 'src/network/cards_session_exception.dart';
+import 'src/utils/auth_token_generator.dart';
 
 // Export utility classes
 export 'src/utils/credit_card_util.dart';
@@ -55,7 +56,6 @@ class XenditCardsSession {
   static const MethodChannel _channel = MethodChannel('xendit_cards_session');
   final _stateController = StreamController<CardSessionState>.broadcast();
   final _cardsClient = CardsClient();
-  String? _apiKey;
 
   Stream<CardSessionState> get state => _stateController.stream;
   CardSessionState _currentState = CardSessionState();
@@ -72,7 +72,6 @@ class XenditCardsSession {
   Future<void> initialize({required String apiKey}) async {
     try {
       _updateState(isLoading: true);
-      _apiKey = apiKey;
       await _channel.invokeMethod('initialize', {'apiKey': apiKey});
       _updateState(isLoading: false);
     } catch (e) {
@@ -190,7 +189,6 @@ class XenditCardsSession {
       case 'makeApiRequest':
         // Handle API requests from native code
         final Map<String, dynamic> arguments = Map<String, dynamic>.from(call.arguments);
-        final String method = arguments['method'];
         final String payload = arguments['payload'];
         final String? apiKey = arguments['apiKey'];
         
@@ -205,8 +203,11 @@ class XenditCardsSession {
           // Create the request DTO
           final request = _createRequestDto(payloadMap);
           
+          // Generate auth token from API key
+          final authToken = AuthTokenGenerator.generateAuthToken(apiKey);
+          
           // Make the API call
-          final response = await _cardsClient.paymentWithSession(request, apiKey);
+          final response = await _cardsClient.paymentWithSession(request, authToken);
           
           // Convert the response to a map
           return {
@@ -227,7 +228,6 @@ class XenditCardsSession {
             };
           }
         }
-        break;
       default:
         break;
     }

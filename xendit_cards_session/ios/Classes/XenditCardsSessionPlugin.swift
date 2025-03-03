@@ -48,6 +48,7 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
       let confirmSave = args["confirmSave"] as? Bool ?? false
       
       // Create request payload
+      // TODO add device fingerprint
       var requestPayload: [String: Any] = [
         "card_number": cardNumber,
         "expiry_month": expiryMonth,
@@ -81,6 +82,7 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
       }
       
       // Create request payload
+      // TODO add device fingerprint
       let requestPayload: [String: Any] = [
         "cvn": cvn,
         "payment_session_id": paymentSessionId,

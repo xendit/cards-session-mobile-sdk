@@ -13,7 +13,7 @@ struct ContentView: View {
     init(appModule: AppModule) {
         self.appModule = appModule
         self.cardSessions = CardSessionsFactory().create(
-            apiKey: "API_KEY_HERE",
+            apiKey: "xnd_public_development_YOUR_KEY_HERE",
             isEnableLog: true
         )
     }

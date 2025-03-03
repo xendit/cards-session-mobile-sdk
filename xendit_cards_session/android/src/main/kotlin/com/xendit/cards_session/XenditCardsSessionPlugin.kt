@@ -74,7 +74,7 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
           put("payment_session_id", paymentSessionId)
           put("confirm_save", confirmSave)
           
-          // Add device fingerprint (empty for now as per requirements)
+          // TODO add device fingerprint
           val deviceJson = JSONObject().apply {
             put("fingerprint", "")
           }
@@ -84,13 +84,8 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
         // Make API call using Flutter's platform channel to invoke Dart code
         mainScope.launch {
           try {
-            // Prepare the payload on a background thread
-            val payload = withContext(Dispatchers.IO) {
-              requestPayload.toString()
-            }
-            
-            // Call the API on the main thread
-            makeApiRequest("paymentWithSession", payload, result)
+            // Call the API directly on the main thread
+            makeApiRequest("paymentWithSession", requestPayload.toString(), result)
           } catch (e: Exception) {
             result.error("API_ERROR", e.message ?: "Unknown error", null)
           }
@@ -98,7 +93,7 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
       }
       "collectCvn" -> {
         if (apiKey.isNullOrEmpty()) {
-          result.error("NOT_INITIALIZED", "SDK not initialized. Call initialize() first", null)
+          result.error("NOT_INITIALIZED", "SDK not initialized. Call initialize() with valid API key first", null)
           return
         }
 
@@ -110,7 +105,7 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
           cvn?.let { put("cvn", it) }
           put("payment_session_id", paymentSessionId)
           
-          // Add device fingerprint (empty for now as per requirements)
+          // TODO add device fingerprint
           val deviceJson = JSONObject().apply {
             put("fingerprint", "")
           }
@@ -120,13 +115,8 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
         // Make API call using Flutter's platform channel to invoke Dart code
         mainScope.launch {
           try {
-            // Prepare the payload on a background thread
-            val payload = withContext(Dispatchers.IO) {
-              requestPayload.toString()
-            }
-            
-            // Call the API on the main thread
-            makeApiRequest("paymentWithSession", payload, result)
+            // Call the API directly on the main thread
+            makeApiRequest("paymentWithSession", requestPayload.toString(), result)
           } catch (e: Exception) {
             result.error("API_ERROR", e.message ?: "Unknown error", null)
           }

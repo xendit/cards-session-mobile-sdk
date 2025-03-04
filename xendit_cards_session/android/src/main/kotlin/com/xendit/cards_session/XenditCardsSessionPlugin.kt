@@ -6,13 +6,17 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.plugin.common.MethodChannel.Result as FlutterResult // otherwise it gets confused with another Result class
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.suspendCancellableCoroutine
 import org.json.JSONObject
+import com.xendit.fingerprintsdk.XenditFingerprintSDK
+import kotlin.coroutines.resume
 
 class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
@@ -30,7 +34,7 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
     context = flutterPluginBinding.applicationContext
   }
 
-  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: FlutterResult) {
     when (call.method) {
       "getPlatformVersion" -> {
         result.success("Android ${android.os.Build.VERSION.RELEASE}")
@@ -41,6 +45,13 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
           result.error("INVALID_API_KEY", "API key cannot be null or empty", null)
           return
         }
+        
+        try {
+          XenditFingerprintSDK.init(context, apiKey!!)
+        } catch (e: Exception) {
+          // Don't return error as the main SDK can still function without fingerprinting
+        }
+        
         result.success(null)
       }
       "collectCardData" -> {
@@ -60,30 +71,29 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
         val cardholderPhoneNumber = call.argument<String>("cardholderPhoneNumber")
         val paymentSessionId = call.argument<String>("paymentSessionId")
         val confirmSave = call.argument<Boolean>("confirmSave") ?: false
-
-        // Create request payload
-        val requestPayload = JSONObject().apply {
-          cardNumber?.let { put("card_number", it) }
-          expiryMonth?.let { put("expiry_month", it) }
-          expiryYear?.let { put("expiry_year", it) }
-          cvn?.let { put("cvn", it) }
-          cardholderFirstName?.let { put("cardholder_first_name", it) }
-          cardholderLastName?.let { put("cardholder_last_name", it) }
-          cardholderEmail?.let { put("cardholder_email", it) }
-          cardholderPhoneNumber?.let { put("cardholder_phone_number", it) }
-          put("payment_session_id", paymentSessionId)
-          put("confirm_save", confirmSave)
-          
-          // TODO add device fingerprint
-          val deviceJson = JSONObject().apply {
-            put("fingerprint", "")
-          }
-          put("device", deviceJson)
-        }
-
-        // Make API call using Flutter's platform channel to invoke Dart code
         mainScope.launch {
           try {
+            val fingerprint = getFingerprint("collect_card_data")
+            
+            // Create request payload
+            val requestPayload = JSONObject().apply {
+              cardNumber?.let { put("card_number", it) }
+              expiryMonth?.let { put("expiry_month", it) }
+              expiryYear?.let { put("expiry_year", it) }
+              cvn?.let { put("cvn", it) }
+              cardholderFirstName?.let { put("cardholder_first_name", it) }
+              cardholderLastName?.let { put("cardholder_last_name", it) }
+              cardholderEmail?.let { put("cardholder_email", it) }
+              cardholderPhoneNumber?.let { put("cardholder_phone_number", it) }
+              put("payment_session_id", paymentSessionId)
+              put("confirm_save", confirmSave)
+              
+              val deviceJson = JSONObject().apply {
+                put("fingerprint", fingerprint)
+              }
+              put("device", deviceJson)
+            }
+
             // Call the API directly on the main thread
             makeApiRequest("paymentWithSession", requestPayload.toString(), result)
           } catch (e: Exception) {
@@ -100,21 +110,21 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
         val cvn = call.argument<String>("cvn")
         val paymentSessionId = call.argument<String>("paymentSessionId")
 
-        // Create request payload
-        val requestPayload = JSONObject().apply {
-          cvn?.let { put("cvn", it) }
-          put("payment_session_id", paymentSessionId)
-          
-          // TODO add device fingerprint
-          val deviceJson = JSONObject().apply {
-            put("fingerprint", "")
-          }
-          put("device", deviceJson)
-        }
-
-        // Make API call using Flutter's platform channel to invoke Dart code
         mainScope.launch {
           try {
+            val fingerprint = getFingerprint("collect_cvn")
+            
+            // Create request payload
+            val requestPayload = JSONObject().apply {
+              cvn?.let { put("cvn", it) }
+              put("payment_session_id", paymentSessionId)
+              
+              val deviceJson = JSONObject().apply {
+                put("fingerprint", fingerprint)
+              }
+              put("device", deviceJson)
+            }
+
             // Call the API directly on the main thread
             makeApiRequest("paymentWithSession", requestPayload.toString(), result)
           } catch (e: Exception) {
@@ -128,7 +138,34 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
     }
   }
 
-  private fun makeApiRequest(method: String, payload: String, result: Result) {
+  private suspend fun getFingerprint(eventName: String): String {
+    return try {
+      val sessionId = XenditFingerprintSDK.getSessionId()
+      
+      // Create a kotlinx.coroutines compatible wrapper for the callback-based XenditFingerprintSDK.scan
+      suspendCancellableCoroutine { continuation ->
+        try {
+          XenditFingerprintSDK.scan(
+            customerEventName = eventName,
+            customerEventID = sessionId,
+            onSuccess = {
+              continuation.resume(sessionId)
+            },
+            onError = { error ->
+              // Even if there's an error, we still return the sessionId
+              continuation.resume(sessionId)
+            }
+          )
+        } catch (e: Exception) {
+          continuation.resume("") // Return empty string on failure
+        }
+      }
+    } catch (e: Exception) {
+      "" // Return empty string on failure
+    }
+  }
+
+  private fun makeApiRequest(method: String, payload: String, result: FlutterResult) {
     // Create a new method channel to call back to Dart
     // This method is called from the main thread
     channel.invokeMethod(
@@ -138,7 +175,7 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
         "payload" to payload,
         "apiKey" to apiKey
       ),
-      object : Result {
+      object : FlutterResult {
         override fun success(response: Any?) {
           if (response is Map<*, *>) {
             result.success(response)

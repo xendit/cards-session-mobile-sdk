@@ -103,3 +103,4 @@ fastlane/test_output
 
 iOSInjectionProject/
 *.gpg
+xendit_cards_session/example/pubspec.lock

@@ -1,9 +1,17 @@
 import Flutter
 import UIKit
 
+#if canImport(XenditFingerprintSDK)
+import XenditFingerprintSDK
+#endif
+
 public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
   private var channel: FlutterMethodChannel?
   private var apiKey: String?
+  
+  #if canImport(XenditFingerprintSDK)
+  private var fingerprintSDK: FingerprintSDK?
+  #endif
   
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "xendit_cards_session", binaryMessenger: registrar.messenger())
@@ -24,6 +32,17 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
       }
       
       self.apiKey = apiKey
+      
+      // Initialize the fingerprint SDK if available
+      #if canImport(XenditFingerprintSDK)
+      do {
+        self.fingerprintSDK = FingerprintSDK()
+        try self.fingerprintSDK?.initSDK(apiKey: apiKey)
+      } catch {
+        self.fingerprintSDK = nil
+      }
+      #endif
+      
       result(nil)
     case "collectCardData":
       guard let apiKey = self.apiKey else {
@@ -47,8 +66,10 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
       let cvn = args["cvn"] as? String
       let confirmSave = args["confirmSave"] as? Bool ?? false
       
+      // Get fingerprint if SDK is available
+      let deviceFingerprint = getFingerprint(eventName: "collect_card_data")
+      
       // Create request payload
-      // TODO add device fingerprint
       var requestPayload: [String: Any] = [
         "card_number": cardNumber,
         "expiry_month": expiryMonth,
@@ -59,7 +80,7 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
         "cardholder_phone_number": cardholderPhoneNumber,
         "payment_session_id": paymentSessionId,
         "confirm_save": confirmSave,
-        "device": ["fingerprint": ""]
+        "device": ["fingerprint": deviceFingerprint]
       ]
       
       if let cvn = cvn {
@@ -81,12 +102,14 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
         return
       }
       
+      // Get fingerprint if SDK is available
+      let deviceFingerprint = getFingerprint(eventName: "collect_cvn")
+      
       // Create request payload
-      // TODO add device fingerprint
       let requestPayload: [String: Any] = [
         "cvn": cvn,
         "payment_session_id": paymentSessionId,
-        "device": ["fingerprint": ""]
+        "device": ["fingerprint": deviceFingerprint]
       ]
       
       // Make API call using Flutter's platform channel to invoke Dart code
@@ -94,6 +117,32 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
     default:
       result(FlutterMethodNotImplemented)
     }
+  }
+  
+  private func getFingerprint(eventName: String) -> String {
+    #if canImport(XenditFingerprintSDK)
+    if let sdk = self.fingerprintSDK {
+      // Get session ID
+      let sessionId = sdk.getSessionId()
+      
+      // Trigger scan
+      sdk.scan(
+        event_name: eventName,
+        event_id: sessionId,
+        completion: { response, errorMsg in
+          if let errorMsg = errorMsg {
+            NSLog("Scan failed for event: \(eventName), error: \(errorMsg)")
+          }
+        }
+      )
+      
+      return sessionId
+    }
+    #endif
+    
+    // If SDK is not available or failed to initialize, return empty string
+    // rather than a fake fingerprint
+    return ""
   }
   
   private func makeApiRequest(method: String, payload: [String: Any], apiKey: String, result: @escaping FlutterResult) {

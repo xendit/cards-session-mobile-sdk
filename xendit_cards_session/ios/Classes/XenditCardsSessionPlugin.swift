@@ -126,7 +126,7 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
       let sessionId = sdk.getSessionId()
       
       // Trigger scan
-      let fingerprint = sdk.scan(
+      sdk.scan(
         event_name: eventName,
         event_id: sessionId,
         completion: { response, errorMsg in
@@ -136,7 +136,7 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
         }
       )
       
-      return fingerprint
+      return sessionId
     }
     #endif
     

@@ -45,6 +45,14 @@ In XCode go to `File` -> `Add Packages...` and provide URL to this repository in
 import cardsSdk
 ```
 
+### Flutter
+
+Use the [Flutter Package](https://docs.flutter.dev/release/breaking-changes/android-java-gradle-migration-guide).
+
+### React Native
+
+Use xendit's card-sessions-js.
+
 ## Usage
 
 ### Initialize the SDK

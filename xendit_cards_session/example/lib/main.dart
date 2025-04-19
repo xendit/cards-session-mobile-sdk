@@ -125,6 +125,18 @@ class _CardsSessionPageState extends State<CardsSessionPage> {
                       cardholderPhoneNumber: "+123456789",
                       paymentSessionId: _paymentSessionIdController.text,
                       confirmSave: _isConfirmedSaved,
+                      billingInformation: const BillingInformationDto(
+                        firstName: "Budi",
+                        lastName: "Santoso",
+                        email: "budi@example.co.id",
+                        phoneNumber: "+6281234567890",
+                        streetLine1: "Jl. Jend. Sudirman No.Kav 48A",
+                        streetLine2: "",
+                        city: "Jakarta",
+                        provinceState: "DKI Jakarta",
+                        country: "ID",
+                        postalCode: "12190"
+                      ),
                     );
                   } catch (e) {
                     // Error is handled via state stream

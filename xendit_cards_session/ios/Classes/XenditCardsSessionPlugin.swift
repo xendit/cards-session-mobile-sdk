@@ -65,6 +65,7 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
       
       let cvn = args["cvn"] as? String
       let confirmSave = args["confirmSave"] as? Bool ?? false
+      let billingInformation = args["billingInformation"] as? [String: Any]
       
       // Get fingerprint if SDK is available
       let deviceFingerprint = getFingerprint(eventName: "collect_card_data")
@@ -85,6 +86,10 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
       
       if let cvn = cvn {
         requestPayload["cvn"] = cvn
+      }
+      
+      if let billingInfo = billingInformation {
+          requestPayload["billing_information"] = billingInfo
       }
       
       // Make API call using Flutter's platform channel to invoke Dart code

@@ -27,9 +27,33 @@ data class CardsRequestDto(
   @SerialName("confirm_save")
   val confirmSave: Boolean? = false,
 
+  @SerialName("billing_information")
+  val billingInformation: BillingInformationDto? = null,
+
   @SerialName("payment_session_id")
   val paymentSessionId: String,
   val device: DeviceFingerprint
+)
+
+@Serializable
+data class BillingInformationDto(
+    @SerialName("first_name")
+    val firstName: String,
+    @SerialName("last_name")
+    val lastName: String,
+    val email: String,
+    @SerialName("phone_number")
+    val phoneNumber: String? = null,
+    @SerialName("street_line1")
+    val streetLine1: String,
+    @SerialName("street_line2")
+    val streetLine2: String? = null,
+    val city: String,
+    @SerialName("province_state")
+    val provinceState: String,
+    val country: String,
+    @SerialName("postal_code")
+    val postalCode: String
 )
 
 @Serializable

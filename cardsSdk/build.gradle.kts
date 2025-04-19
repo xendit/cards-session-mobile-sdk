@@ -213,7 +213,7 @@ publishing {
   val sonatypePassword = getProperty("SONATYPE_PASSWORD")
   publications.withType<MavenPublication> {
     groupId = "com.xendit"
-    version = "1.0.3"
+    version = "1.1.0"
 
     pom {
       name.set("Xendit Cards SDK")

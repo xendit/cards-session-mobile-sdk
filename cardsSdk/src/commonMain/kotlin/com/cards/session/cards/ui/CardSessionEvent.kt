@@ -1,5 +1,7 @@
 package com.cards.session.cards.ui
 
+import com.cards.session.cards.models.BillingInformationDto
+
 sealed class CardSessionEvent {
   data class CollectCardData(
     val cardNumber: String,
@@ -11,6 +13,8 @@ sealed class CardSessionEvent {
     val cardholderEmail: String,
     val cardholderPhoneNumber: String,
     val paymentSessionId: String,
+    val confirmSave: Boolean = false,
+    val billingInformation: BillingInformationDto? = null,
     val deviceFingerprint: String = ""
   ) : CardSessionEvent()
 

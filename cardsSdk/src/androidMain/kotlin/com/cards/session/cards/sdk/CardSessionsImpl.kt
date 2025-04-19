@@ -2,6 +2,7 @@ package com.cards.session.cards.sdk
 
 import android.content.Context
 import android.util.Log
+import com.cards.session.cards.models.BillingInformationDto
 import com.cards.session.cards.models.CardsRequestDto
 import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.cards.models.DeviceFingerprint
@@ -40,7 +41,8 @@ internal class CardSessionsImpl private constructor(
     cardholderEmail: String,
     cardholderPhoneNumber: String,
     paymentSessionId: String,
-    confirmSave: Boolean
+    confirmSave: Boolean,
+    billingInformation: BillingInformationDto?
   ): CardsResponseDto {
     _state.update { it.copy(isLoading = true, exception = null) }
 
@@ -72,6 +74,7 @@ internal class CardSessionsImpl private constructor(
         cardholderPhoneNumber = cardholderPhoneNumber,
         paymentSessionId = paymentSessionId,
         confirmSave = confirmSave,
+        billingInformation = billingInformation,
         device = DeviceFingerprint(deviceFingerprint)
       )
 

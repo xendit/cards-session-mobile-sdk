@@ -139,7 +139,7 @@ fun AppRoot() {
                 cardholderPhoneNumber = "+123456789",
                 paymentSessionId = paymentSessionId,
                 confirmSave = isConfirmedSaved,
-                billingInformation = com.cards.session.cards.models.BillingInformationDto(
+                billingInformation = BillingInformationDto(
                   firstName = "Budi",
                   lastName = "Santoso",
                   email = "budi@example.co.id",

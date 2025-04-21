@@ -17,7 +17,7 @@ Add this to your package's pubspec.yaml file:
 
 ```
 dependencies:
-  xendit_cards_session: ^1.0.0
+  xendit_cards_session: ^1.1.0
 ```
 
 Then run:

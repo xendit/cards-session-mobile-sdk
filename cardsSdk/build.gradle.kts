@@ -13,6 +13,7 @@ plugins {
   signing
 }
 kotlin {
+  jvmToolchain(17)
   androidTarget()
   iosX64()
   iosArm64()
@@ -119,7 +120,6 @@ android {
   buildTypes {
     debug {
       isMinifyEnabled = false
-      buildConfigField("String", "BASE_URL", "\"https://api.stg.tidnex.dev/v3\"")
     }
     release {
       isMinifyEnabled = false
@@ -128,7 +128,6 @@ android {
         "proguard-rules.pro"
       )
       consumerProguardFiles("proguard-rules.pro")
-      buildConfigField("String", "BASE_URL", "\"https://api.xendit.co/v3\"")
     }
   }
 
@@ -214,7 +213,7 @@ publishing {
   val sonatypePassword = getProperty("SONATYPE_PASSWORD")
   publications.withType<MavenPublication> {
     groupId = "com.xendit"
-    version = "1.0.1"
+    version = "1.1.0"
 
     pom {
       name.set("Xendit Cards SDK")

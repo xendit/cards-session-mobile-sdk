@@ -18,7 +18,7 @@ Add the following to your app's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.xendit:cardsSdk:1.0.1")
+    implementation("com.xendit:cardsSdk:1.1.0")
 }
 ```
 
@@ -87,7 +87,19 @@ val response = cardSessions.collectCardData(
     cardholderEmail = "john@example.com",
     cardholderPhoneNumber = "+1234567890",
     paymentSessionId = "ps-1234567890", // Session ID from your backend
-    confirmSave = true // Optional, default to false
+    confirmSave = true, // Optional, default to false
+    billingInformation = BillingInformationDto( // Optional
+        firstName = "Budi",
+        lastName = "Santoso",
+        email = "budi@example.co.id",
+        phoneNumber = "+6281234567890",
+        streetLine1 = "Jl. Jend. Sudirman No.Kav 48A",
+        streetLine2 = "",
+        city = "San Francisco",
+        provinceState = "CA",
+        country = "US",
+        postalCode = "94107"
+    )
 )
 ```
 
@@ -104,7 +116,19 @@ let response = try await cardSessions.collectCardData(
     cardholderEmail: "john@example.com",
     cardholderPhoneNumber: "+1234567890",
     paymentSessionId: "ps-1234567890",
-    confirmSave = true // Optional, default to false
+    confirmSave: true, // Optional, default to false
+    billingInformation: BillingInformationDto( // Optional
+        firstName: "Budi",
+        lastName: "Santoso",
+        email: "budi@example.co.id",
+        phoneNumber: "+6281234567890",
+        streetLine1: "Jl. Jend. Sudirman No.Kav 48A",
+        streetLine2: "", // Optional
+        city: "San Francisco",
+        provinceState: "CA",
+        country: "US",
+        postalCode: "94107"
+    )
 )
 ```
 

@@ -12,6 +12,7 @@ class CardsRequestDto {
   final String? cardholderPhoneNumber;
   final String? cvn;
   final bool? confirmSave;
+  final BillingInformationDto? billingInformation;
   final String paymentSessionId;
   final DeviceFingerprint device;
 
@@ -25,6 +26,7 @@ class CardsRequestDto {
     this.cardholderPhoneNumber,
     this.cvn,
     this.confirmSave = false,
+    this.billingInformation,
     required this.paymentSessionId,
     required this.device,
   });
@@ -40,8 +42,52 @@ class CardsRequestDto {
       if (cardholderPhoneNumber != null) 'cardholder_phone_number': cardholderPhoneNumber,
       if (cvn != null) 'cvn': cvn,
       if (confirmSave != null) 'confirm_save': confirmSave,
+      if (billingInformation != null) 'billing_information': billingInformation!.toJson(),
       'payment_session_id': paymentSessionId,
       'device': device.toJson(),
+    };
+  }
+}
+
+/// Billing information
+@immutable
+class BillingInformationDto {
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String? phoneNumber;
+  final String streetLine1;
+  final String? streetLine2;
+  final String city;
+  final String provinceState;
+  final String country;
+  final String postalCode;
+
+  const BillingInformationDto({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    this.phoneNumber,
+    required this.streetLine1,
+    this.streetLine2,
+    required this.city,
+    required this.provinceState,
+    required this.country,
+    required this.postalCode,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      if (phoneNumber != null) 'phone_number': phoneNumber,
+      'street_line1': streetLine1,
+      if (streetLine2 != null) 'street_line2': streetLine2,
+      'city': city,
+      'province_state': provinceState,
+      'country': country,
+      'postal_code': postalCode,
     };
   }
 }

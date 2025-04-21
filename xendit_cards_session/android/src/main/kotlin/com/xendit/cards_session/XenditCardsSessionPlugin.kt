@@ -71,6 +71,8 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
         val cardholderPhoneNumber = call.argument<String>("cardholderPhoneNumber")
         val paymentSessionId = call.argument<String>("paymentSessionId")
         val confirmSave = call.argument<Boolean>("confirmSave") ?: false
+        val billingInformation = call.argument<Map<String, Any?>>("billingInformation")
+
         mainScope.launch {
           try {
             val fingerprint = getFingerprint("collect_card_data")
@@ -87,7 +89,24 @@ class XenditCardsSessionPlugin: FlutterPlugin, MethodCallHandler {
               cardholderPhoneNumber?.let { put("cardholder_phone_number", it) }
               put("payment_session_id", paymentSessionId)
               put("confirm_save", confirmSave)
-              
+
+              // Add billing information if present
+              billingInformation?.let {
+                val billingJson = JSONObject().apply {
+                  it["first_name"]?.let { v -> put("first_name", v as String) }
+                  it["last_name"]?.let { v -> put("last_name", v as String) }
+                  it["email"]?.let { v -> put("email", v as String) }
+                  it["phone_number"]?.let { v -> put("phone_number", v as String) }
+                  it["street_line1"]?.let { v -> put("street_line1", v as String) }
+                  it["street_line2"]?.let { v -> put("street_line2", v as String) }
+                  it["city"]?.let { v -> put("city", v as String) }
+                  it["province_state"]?.let { v -> put("province_state", v as String) }
+                  it["country"]?.let { v -> put("country", v as String) }
+                  it["postal_code"]?.let { v -> put("postal_code", v as String) }
+                }
+                put("billing_information", billingJson)
+              }
+
               val deviceJson = JSONObject().apply {
                 put("fingerprint", fingerprint)
               }

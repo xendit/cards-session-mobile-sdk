@@ -1,5 +1,6 @@
 package com.cards.session.cards.sdk
 
+import com.cards.session.cards.models.BillingInformationDto
 import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.cards.ui.CardSessionState
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +18,8 @@ interface CardSessions {
         cardholderEmail: String,
         cardholderPhoneNumber: String,
         paymentSessionId: String,
-        confirmSave: Boolean = false
+        confirmSave: Boolean = false,
+        billingInformation: BillingInformationDto? = null
     ): CardsResponseDto
 
     suspend fun collectCvn(

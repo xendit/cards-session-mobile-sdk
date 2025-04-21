@@ -2,6 +2,7 @@ package com.cards.session.cards.sdk
 
 import cocoapods.XenditFingerprintSDK.FingerprintSDK
 import cocoapods.XenditFingerprintSDK.LogModeAll
+import com.cards.session.cards.models.BillingInformationDto
 import com.cards.session.cards.models.CardsRequestDto
 import com.cards.session.cards.models.CardsResponseDto
 import com.cards.session.cards.models.DeviceFingerprint
@@ -43,7 +44,8 @@ private constructor(
     cardholderEmail: String,
     cardholderPhoneNumber: String,
     paymentSessionId: String,
-    confirmSave: Boolean
+    confirmSave: Boolean,
+    billingInformation: BillingInformationDto?
   ): CardsResponseDto {
     _state.update { it.copy(isLoading = true, exception = null) }
 
@@ -75,6 +77,7 @@ private constructor(
         cardholderPhoneNumber = cardholderPhoneNumber,
         paymentSessionId = paymentSessionId,
         confirmSave = confirmSave,
+        billingInformation = billingInformation,
         device = DeviceFingerprint(deviceFingerprint)
       )
 

@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../cardsSdk"
 
 SPEC CHECKSUMS:
-  cardsSdk: 6cf53581e3f04db427f8dd0700d1c11e78eac652
+  cardsSdk: 2bf9f8b506f6a9898613dcc6dcea91940d8bcc09
   XenditFingerprintSDK: 29410a2dcf467fe33d6e0167f590deae47c753ee
 
 PODFILE CHECKSUM: 2d3ff3b1724835dab0bcce0b112c67a9f1440453

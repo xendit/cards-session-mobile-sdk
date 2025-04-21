@@ -4,5 +4,5 @@ import com.cards.session.BuildConfig
 
 actual object NetworkConstants {
     actual val BASE_URL: String
-        get() = BuildConfig.BASE_URL
+        get() = "https://api.xendit.co/v3"
 }

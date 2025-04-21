@@ -1,6 +1,6 @@
 name: xendit_cards_session
 description: A Flutter plugin for integrating Xendit's card payment functionality with secure card data collection, validation, and 3DS support.
-version: 1.0.0
+version: 1.1.0
 homepage: https://xendit.co
 repository: https://github.com/xendit/xendit-cards-session-flutter
 issue_tracker: https://github.com/xendit/xendit-cards-session-flutter/issues

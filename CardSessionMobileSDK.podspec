@@ -1,8 +1,8 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'CardSessionMobileSDK'
-    spec.version                  = '1.0.1'
+    spec.version                  = '1.1.0'
     spec.homepage                 = 'https://github.com/xendit/cards-session-mobile-sdk'
-    spec.source                   = { :http=> 'https://github.com/xendit/cards-session-mobile-sdk/releases/download/1.0.1/CardsSessionMobileSDK-1.0.1.zip'}
+    spec.source                   = { :http=> 'https://github.com/xendit/cards-session-mobile-sdk/releases/download/1.1.0/CardsSessionMobileSDK-1.1.0.zip'}
     spec.author                   = { "mobile-sdk-team" => "mobile-sdk@xendit.co" }
     spec.license                  = { :type => 'MIT', :text => ''}
     spec.summary                  = 'Xendit\'s Cards Session SDK module'

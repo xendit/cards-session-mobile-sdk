@@ -20,8 +20,8 @@ kotlin {
   iosSimulatorArm64()
 
   val xcframeworkName = "cardsSdk"
-  val xcFrameworkVersion = "1.0.1"
-  val xcFrameworkBundleVersion = "2" // Increase it everytime version changed
+  val xcFrameworkVersion = "1.1.0"
+  val xcFrameworkBundleVersion = "3" // Increase it everytime version changed
   val xcf = XCFramework(xcframeworkName)
 
   listOf(
@@ -44,7 +44,7 @@ kotlin {
   cocoapods {
     summary = "Cards Session SDK module"
     homepage = "https://github.com/xendit/cards-session-mobile-sdk"
-    version = "1.0.0"
+    version = "1.1.0"
     license = "{ :type => 'MIT', :text => 'License text'}"
     ios.deploymentTarget = "14.0"
     source = "{\n" +

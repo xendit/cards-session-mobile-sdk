@@ -12,8 +12,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "CardsSessionMobileSDK",
-            url: "https://github.com/xendit/cards-session-mobile-sdk/releases/download/1.0.1/CardsSessionMobileSDK-1.0.1.zip",
-            checksum: "47697fcb1a6d1418c24d717f547e6e2956dc60b3a7b61c30a03aec90ebc77daa"
+            url: "https://github.com/xendit/cards-session-mobile-sdk/releases/download/1.1.0/CardsSessionMobileSDK-1.1.0.zip",
+            checksum: "d94e96fad6b551d536aedbc70de6ea34c8c0985a0a5b9d94c9e139eb7e44b6f1"
         ),
         .binaryTarget(
             name: "XenditFingerprintSDK",

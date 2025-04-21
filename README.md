@@ -47,7 +47,7 @@ import cardsSdk
 
 ### Flutter
 
-Use the [Flutter Package](https://docs.flutter.dev/release/breaking-changes/android-java-gradle-migration-guide).
+Use the [Flutter Package](https://pub.dev/packages/xendit_cards_session).
 
 ### React Native
 

@@ -1,0 +1,39 @@
+[versions]
+agp = "8.3.2"
+kotlin = "1.9.24"
+ktor = "2.3.9"
+kotlinDateTime = "0.6.0"
+napier = "2.7.1"
+xenditFingerprint = "1.0.1"
+coroutines = "1.7.3"
+kotlinxSerialization = "1.5.1"
+desugar = "2.0.4"
+junit = "4.13.2"
+material = "1.11.0"
+
+[libraries]
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+kotlin-date-time = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinDateTime" }
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+xendit-fingerprint = { module = "com.xendit:fingerprint", version.ref = "xenditFingerprint" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+[plugins]
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+[bundles]
+ktor = [
+    "ktor-client-content-negotiation",
+    "ktor-client-core",
+    "ktor-serialization-kotlinx-json",
+]
+

@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'xendit_cards_session'
-  s.version          = '0.0.1'
+  s.version          = '1.1.0'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC
 A new Flutter plugin project.
@@ -15,7 +15,7 @@ A new Flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'XenditFingerprintSDK'
+  s.dependency 'XenditFingerprintSDK', '1.0.1'
   
   s.platform = :ios, '12.0'
 

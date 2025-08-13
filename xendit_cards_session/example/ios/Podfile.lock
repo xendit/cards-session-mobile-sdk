@@ -2,13 +2,19 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - xendit_cards_session (0.0.1):
+  - xendit_cards_session (1.1.0):
     - Flutter
+    - XenditFingerprintSDK (= 1.0.1)
+  - XenditFingerprintSDK (1.0.1)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - xendit_cards_session (from `.symlinks/plugins/xendit_cards_session/ios`)
+
+SPEC REPOS:
+  trunk:
+    - XenditFingerprintSDK
 
 EXTERNAL SOURCES:
   Flutter:
@@ -21,7 +27,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
-  xendit_cards_session: 9510def8a2d1473be867771e84398fb91c728dad
+  xendit_cards_session: 1edca659fddc9138c5fd61c2973b0bb5a55b4008
+  XenditFingerprintSDK: 29410a2dcf467fe33d6e0167f590deae47c753ee
 
 PODFILE CHECKSUM: 8f3d15695469162b90aab66643ceac7b4b776d4b
 

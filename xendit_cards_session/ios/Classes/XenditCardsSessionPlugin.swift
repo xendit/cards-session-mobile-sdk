@@ -36,7 +36,7 @@ public class XenditCardsSessionPlugin: NSObject, FlutterPlugin {
       // Initialize the fingerprint SDK if available
       #if canImport(XenditFingerprintSDK)
       do {
-        self.fingerprintSDK = FingerprintSDK()
+        self.fingerprintSDK = FingerprintSDK.shared
         try self.fingerprintSDK?.initSDK(apiKey: apiKey)
       } catch {
         self.fingerprintSDK = nil

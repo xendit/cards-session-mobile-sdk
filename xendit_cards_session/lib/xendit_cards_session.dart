@@ -9,6 +9,7 @@ import 'src/utils/auth_token_generator.dart';
 // Export utility classes
 export 'src/utils/credit_card_util.dart';
 export 'src/utils/auth_token_generator.dart';
+export 'src/models/cards_session_dto.dart';
 
 class CardResponse {
   final String? message;
@@ -89,6 +90,7 @@ class XenditCardsSession {
     required String cardholderEmail,
     required String cardholderPhoneNumber,
     required String paymentSessionId,
+    required BillingInformationDto billingInformation,
     bool confirmSave = false,
   }) async {
     try {
@@ -104,8 +106,9 @@ class XenditCardsSession {
         'cardholderPhoneNumber': cardholderPhoneNumber,
         'paymentSessionId': paymentSessionId,
         'confirmSave': confirmSave,
+        'billingInformation': billingInformation.toJson()
       });
-      
+
       final response = CardResponse.fromJson(Map<String, dynamic>.from(result));
       _updateState(isLoading: false, cardResponse: response);
       return response;
@@ -125,7 +128,7 @@ class XenditCardsSession {
         'cvn': cvn,
         'paymentSessionId': paymentSessionId,
       });
-      
+
       final response = CardResponse.fromJson(Map<String, dynamic>.from(result));
       _updateState(isLoading: false, cardResponse: response);
       return response;
@@ -167,7 +170,8 @@ class XenditCardsSession {
   Future<dynamic> _handleMethodCall(MethodCall call) async {
     switch (call.method) {
       case 'onStateChanged':
-        final Map<String, dynamic> arguments = Map<String, dynamic>.from(call.arguments);
+        final Map<String, dynamic> arguments =
+            Map<String, dynamic>.from(call.arguments);
         if (arguments.containsKey('isLoading')) {
           _updateState(isLoading: arguments['isLoading']);
         }
@@ -188,27 +192,29 @@ class XenditCardsSession {
         break;
       case 'makeApiRequest':
         // Handle API requests from native code
-        final Map<String, dynamic> arguments = Map<String, dynamic>.from(call.arguments);
+        final Map<String, dynamic> arguments =
+            Map<String, dynamic>.from(call.arguments);
         final String payload = arguments['payload'];
         final String? apiKey = arguments['apiKey'];
-        
+
         if (apiKey == null || apiKey.isEmpty) {
           return {'error': 'API key is not set'};
         }
-        
+
         try {
           // Parse the payload from JSON
           final Map<String, dynamic> payloadMap = jsonDecode(payload);
-          
+
           // Create the request DTO
           final request = _createRequestDto(payloadMap);
-          
+
           // Generate auth token from API key
           final authToken = AuthTokenGenerator.generateAuthToken(apiKey);
-          
+
           // Make the API call
-          final response = await _cardsClient.paymentWithSession(request, authToken);
-          
+          final response =
+              await _cardsClient.paymentWithSession(request, authToken);
+
           // Convert the response to a map
           return {
             'message': response.message,
@@ -232,28 +238,35 @@ class XenditCardsSession {
         break;
     }
   }
-  
+
   CardsRequestDto _createRequestDto(Map<String, dynamic> payload) {
     // Extract device fingerprint
     final deviceData = payload['device'] as Map<String, dynamic>;
     final deviceFingerprint = DeviceFingerprint(
       fingerprint: deviceData['fingerprint'] as String,
     );
-    
+
+    // Conditionally parse billing information
+    final billingInfoPayload = payload['billing_information'];
+    final BillingInformationDto? billingInformation = billingInfoPayload != null
+        ? BillingInformationDto.fromJson(
+            billingInfoPayload as Map<String, dynamic>)
+        : null;
+
     // Create the request DTO
     return CardsRequestDto(
-      cardNumber: payload['card_number'] as String?,
-      expiryMonth: payload['expiry_month'] as String?,
-      expiryYear: payload['expiry_year'] as String?,
-      cvn: payload['cvn'] as String?,
-      cardholderFirstName: payload['cardholder_first_name'] as String?,
-      cardholderLastName: payload['cardholder_last_name'] as String?,
-      cardholderEmail: payload['cardholder_email'] as String?,
-      cardholderPhoneNumber: payload['cardholder_phone_number'] as String?,
-      confirmSave: payload['confirm_save'] as bool?,
-      paymentSessionId: payload['payment_session_id'] as String,
-      device: deviceFingerprint,
-    );
+        cardNumber: payload['card_number'] as String?,
+        expiryMonth: payload['expiry_month'] as String?,
+        expiryYear: payload['expiry_year'] as String?,
+        cvn: payload['cvn'] as String?,
+        cardholderFirstName: payload['cardholder_first_name'] as String?,
+        cardholderLastName: payload['cardholder_last_name'] as String?,
+        cardholderEmail: payload['cardholder_email'] as String?,
+        cardholderPhoneNumber: payload['cardholder_phone_number'] as String?,
+        confirmSave: payload['confirm_save'] as bool?,
+        paymentSessionId: payload['payment_session_id'] as String,
+        device: deviceFingerprint,
+        billingInformation: billingInformation);
   }
 
   void dispose() {

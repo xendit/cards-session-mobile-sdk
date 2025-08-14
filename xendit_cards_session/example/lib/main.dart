@@ -35,7 +35,7 @@ class _CardsSessionPageState extends State<CardsSessionPage> {
   final _paymentSessionIdController = TextEditingController();
   bool _isConfirmedSaved = false;
   CardSessionState _state = CardSessionState();
-  
+
   @override
   void initState() {
     super.initState();
@@ -75,10 +75,7 @@ class _CardsSessionPageState extends State<CardsSessionPage> {
               const Text(
                 'Welcome to Cards Session!',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -95,9 +92,7 @@ class _CardsSessionPageState extends State<CardsSessionPage> {
                 children: [
                   const Text(
                     'Confirm Save',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(width: 16),
                   Switch(
@@ -135,7 +130,7 @@ class _CardsSessionPageState extends State<CardsSessionPage> {
                         city: "Jakarta",
                         provinceState: "DKI Jakarta",
                         country: "ID",
-                        postalCode: "12190"
+                        postalCode: "12190",
                       ),
                     );
                   } catch (e) {
@@ -171,12 +166,9 @@ class _CardsSessionPageState extends State<CardsSessionPage> {
     if (_state.isLoading) {
       return const CircularProgressIndicator();
     } else if (_state.exception != null) {
-      final errorMessage = _state.exception!.message ?? 
-                          'Error: ${_state.exception!.errorCode}';
-      return Text(
-        errorMessage,
-        style: const TextStyle(color: Colors.red),
-      );
+      final errorMessage =
+          _state.exception!.message ?? 'Error: ${_state.exception!.errorCode}';
+      return Text(errorMessage, style: const TextStyle(color: Colors.red));
     } else if (_state.cardResponse != null) {
       return Text(_state.cardResponse!.message ?? 'Success');
     }

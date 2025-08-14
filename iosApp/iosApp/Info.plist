@@ -25,7 +25,9 @@
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
 	</dict>
-	<key>UIRequiredDeviceCapabilities</key>
+  <key>UIUserInterfaceStyle</key>
+  <string>Light</string>
+  <key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>

@@ -26,8 +26,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
-  xendit_cards_session: 1edca659fddc9138c5fd61c2973b0bb5a55b4008
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  xendit_cards_session: 6bc74732e60355da466afb0d2a12541d2d550972
   XenditFingerprintSDK: 29410a2dcf467fe33d6e0167f590deae47c753ee
 
 PODFILE CHECKSUM: 8f3d15695469162b90aab66643ceac7b4b776d4b

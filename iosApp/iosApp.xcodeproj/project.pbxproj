@@ -21,7 +21,7 @@
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0C0CDBBE2D06AD03002DC16A /* CardSessionsImpl.kt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CardSessionsImpl.kt; path = ../cardsSdk/src/iosMain/kotlin/com/cards/session/cards/sdk/CardSessionsImpl.kt; sourceTree = SOURCE_ROOT; };
-		0C0CDBC52D06DB5C002DC16A /* CardSessions.kt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CardSessions.kt; path = ../cardsSdk/src/commonMain/kotlin/com/cards/session/cards/sdk/CardSessions.kt; sourceTree = SOURCE_ROOT; };
+		0C0CDBC52D06DB5C002DC16A /* CardSessions.kt */ = {isa = PBXFileReference; lastKnownFileType = file.kt; name = CardSessions.kt; path = ../cardsSdk/src/commonMain/kotlin/com/cards/session/cards/sdk/CardSessions.kt; sourceTree = SOURCE_ROOT; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		21FA6F1F2D0997E600DD5E13 /* CustomTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldStyle.swift; sourceTree = "<group>"; };
 		42AF08E65F4330F0220806A5 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };

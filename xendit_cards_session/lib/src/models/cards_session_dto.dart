@@ -36,13 +36,17 @@ class CardsRequestDto {
       if (cardNumber != null) 'card_number': cardNumber,
       if (expiryMonth != null) 'expiry_month': expiryMonth,
       if (expiryYear != null) 'expiry_year': expiryYear,
-      if (cardholderFirstName != null) 'cardholder_first_name': cardholderFirstName,
-      if (cardholderLastName != null) 'cardholder_last_name': cardholderLastName,
+      if (cardholderFirstName != null)
+        'cardholder_first_name': cardholderFirstName,
+      if (cardholderLastName != null)
+        'cardholder_last_name': cardholderLastName,
       if (cardholderEmail != null) 'cardholder_email': cardholderEmail,
-      if (cardholderPhoneNumber != null) 'cardholder_phone_number': cardholderPhoneNumber,
+      if (cardholderPhoneNumber != null)
+        'cardholder_phone_number': cardholderPhoneNumber,
       if (cvn != null) 'cvn': cvn,
       if (confirmSave != null) 'confirm_save': confirmSave,
-      if (billingInformation != null) 'billing_information': billingInformation!.toJson(),
+      if (billingInformation != null)
+        'billing_information': billingInformation!.toJson(),
       'payment_session_id': paymentSessionId,
       'device': device.toJson(),
     };
@@ -90,6 +94,21 @@ class BillingInformationDto {
       'postal_code': postalCode,
     };
   }
+
+  factory BillingInformationDto.fromJson(Map<String, dynamic> json) {
+    return BillingInformationDto(
+      firstName: json['first_name'] as String,
+      lastName: json['last_name'] as String,
+      email: json['email'] as String,
+      phoneNumber: json['phone_number'] as String?,
+      streetLine1: json['street_line1'] as String,
+      streetLine2: json['street_line2'] as String?,
+      city: json['city'] as String,
+      provinceState: json['province_state'] as String,
+      country: json['country'] as String,
+      postalCode: json['postal_code'] as String,
+    );
+  }
 }
 
 /// Device fingerprint information
@@ -131,4 +150,4 @@ class CardsResponseDto {
       actionUrl: json['action_url'] as String?,
     );
   }
-} 
+}

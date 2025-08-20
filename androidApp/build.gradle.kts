@@ -15,6 +15,7 @@ android {
     targetSdk = 34
     versionCode = 1
     versionName = "1.0"
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
   packaging {
     resources {
@@ -66,4 +67,7 @@ dependencies {
   androidTestImplementation(libs.hilt.testing)
 
   coreLibraryDesugaring(libs.android.desugar)
+  androidTestImplementation("androidx.test:monitor:1.6.1")
+  debugImplementation("androidx.test:monitor:1.6.1")
+
 }

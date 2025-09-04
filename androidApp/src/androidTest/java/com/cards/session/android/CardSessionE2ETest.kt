@@ -137,14 +137,7 @@ class CardSessionE2ETest {
             delay(TestData.cleanupDelay)
 
         } catch (e: Exception) {
-            // If session creation fails, we can skip the test
-            println("Test failed with exception: ${e.message}")
-            assertTrue(
-                "Exception message should contain session or network error",
-                e.message?.contains("session", ignoreCase = true) == true ||
-                        e.message?.contains("network", ignoreCase = true) == true ||
-                        e.message?.contains("connection", ignoreCase = true) == true
-            )
+            fail("Test failed with exception: ${e.message}")
         }
     }
 
@@ -156,7 +149,7 @@ class CardSessionE2ETest {
             // Step 1: Create a CVN collection session
             val referenceId = "test_cvn_${System.currentTimeMillis()}"
             val cvnSession = TestData.cvnCollectionSession
-            
+
             val sessionResponse = apiHelper.createSession(
                 referenceId = referenceId,
                 customerId = TestData.customerId,
@@ -214,13 +207,7 @@ class CardSessionE2ETest {
             }
 
         } catch (e: Exception) {
-            println("CVN test failed: ${e.message}")
-            // Expected in test environment without valid payment token
-            assertTrue(
-                "Exception should be related to session or token",
-                e.message?.contains("session", ignoreCase = true) == true ||
-                        e.message?.contains("token", ignoreCase = true) == true
-            )
+            fail("CVN test failed: ${e.message}")
         }
     }
 
@@ -309,8 +296,7 @@ class CardSessionE2ETest {
             }
 
         } catch (e: Exception) {
-            println("Error handling test exception: ${e.message}")
-            // This is acceptable in test environment
+            fail("Error handling test exception: ${e.message}")
         }
     }
 
@@ -385,8 +371,7 @@ class CardSessionE2ETest {
                 states.any { it.isLoading })
 
         } catch (e: Exception) {
-            println("State flow test failed: ${e.message}")
-            // Acceptable in test environment
+            fail("State flow test failed: ${e.message}")
         }
     }
 
@@ -458,8 +443,7 @@ class CardSessionE2ETest {
                 }
 
             } catch (e: Exception) {
-                println("Card $index test failed: ${e.message}")
-                assertTrue("Exception message should not be empty", e.message?.isNotEmpty() == true)
+                fail("Card $index test failed: ${e.message}")
             }
 
             // Small delay between tests

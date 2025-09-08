@@ -14,13 +14,13 @@ final class XenditCardsSessionE2ETests: XCTestCase {
         
         // Initialize API helper with test credentials
         apiHelper = XenditApiHelper(
-            apiKey: TestData.getPublicKey(),
+            apiKey: TestData.getSecretKey(),
             baseUrl: TestData.getBaseUrl()
         )
         
         // Initialize CardSessions SDK
         cardSessions = CardSessionsFactory().create(
-            apiKey: TestData.getSecretKey(),
+            apiKey: TestData.getPublicKey(),
             isEnableLog: true
         )
     }
@@ -104,8 +104,8 @@ final class XenditCardsSessionE2ETests: XCTestCase {
         let sessionStatus = try await apiHelper.getSession(sessionId: sessionId)
         if let status = sessionStatus["status"] as? String {
             XCTAssertTrue(
-                status == "COMPLETED" || status == "APPROVED",
-                "Session status should be COMPLETED or APPROVED, got: \(status)"
+                status == "COMPLETED",
+                "Session status should be COMPLETED, got: \(status)"
             )
         }
         

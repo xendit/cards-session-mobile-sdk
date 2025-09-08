@@ -13,10 +13,10 @@ struct TestData {
     static let baseUrl = "https://api.xendit.co"
     
     // Default API Keys (replace with real keys via environment variables)
-    private static let defaultPublicKey = "Basic XXXXX"
-    private static let defaultSecretKey = "xnd_public_development_XXXXX"
+    private static let defaultPublicKey = "xnd_public_development_XXXXX"
+    private static let defaultSecretKey = "Basic XXXXX"
     private static let paymentTokenId = "pt-XXXXX"
-    static let customerId = "cust-XXXXXX"
+    static let customerId = "cust-XXXXX"
     
     // Getters that check for environment variables
     static func getPublicKey() -> String {

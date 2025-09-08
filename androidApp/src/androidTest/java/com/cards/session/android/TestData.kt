@@ -17,10 +17,10 @@ object TestData {
     const val baseUrl = "https://api.xendit.co"
 
     // Default API Keys (replace with real keys via environment variables)
-    private const val defaultPublicKey = "Basic XXXX"
-    private const val defaultSecretKey = "xnd_public_development_XXXX"
-    private const val paymentTokenId = "pt-XXX";
-    const val customerId = "cust-XXX"
+    private const val defaultSecretKey = "Basic XXXXX"
+    private const val defaultPublicKey = "xnd_public_development_XXXXX"
+    private const val paymentTokenId = "pt-XXXXX";
+    private const val customerId = "cust-XXXXX"
 
     // Getters that check for environment variables or system properties
     fun getPublicKey(): String =
@@ -38,14 +38,24 @@ object TestData {
             ?: System.getProperty("TEST_BASE_URL")
             ?: baseUrl
 
+    fun getCustomerId(): String =
+        System.getenv("TEST_CUSTOMER_ID")
+            ?: System.getProperty("TEST_CUSTOMER_ID")
+            ?: customerId
+
+    fun getPaymentTokenId(): String =
+        System.getenv("TEST_PAYMENT_ID")
+            ?: System.getProperty("TEST_PAYMENT_ID")
+            ?: paymentTokenId
+
     // Session Configurations
     val saveCardSession = mapOf(
         "description" to "Integration test session",
         "amount" to 0,
         "sessionType" to "SAVE",
-        "country" to "ID",
+        "country" to "SG",
         "locale" to "en",
-        "currency" to "IDR",
+        "currency" to "SGD",
         "metadata" to mapOf(
             "test_run" to "true",
             "integration_test" to "e2e"
@@ -56,10 +66,10 @@ object TestData {
         "description" to "CVN collection test",
         "amount" to 10000,
         "sessionType" to "PAY",
-        "country" to "ID",
+        "country" to "SG",
         "locale" to "en",
-        "currency" to "IDR",
-        "card_payment_token_id" to paymentTokenId,
+        "currency" to "SGD",
+        "card_payment_token_id" to getPaymentTokenId(),
         "metadata" to mapOf(
             "test_type" to "cvn_collection"
         )

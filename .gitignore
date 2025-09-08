@@ -105,5 +105,5 @@ iOSInjectionProject/
 *.gpg
 xendit_cards_session/example/pubspec.lock
 *.xcresult                                                                                                                │ │
-xendit_cards_session/example/iosapp/LocalDerivedData/ 
-xendit_cards_session/example/iosapp/TestResult/
+**/LocalDerivedData
+**/TestResult

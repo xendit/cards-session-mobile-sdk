@@ -21,7 +21,7 @@ import com.cards.session.cards.ui.CardSessionState
 class CardSessionE2ETest {
 
     // Use centralized test data with environment variable support
-    private val apiHelper = XenditApiHelper(TestData.getPublicKey(), TestData.getBaseUrl())
+    private val apiHelper = XenditApiHelper(TestData.getSecretKey(), TestData.getBaseUrl())
 
     @Test
     fun testApplicationContext() {
@@ -41,7 +41,7 @@ class CardSessionE2ETest {
             val saveCardSession = TestData.saveCardSession
             val sessionResponse = apiHelper.createSession(
                 referenceId = referenceId,
-                customerId = TestData.customerId,
+                customerId = TestData.getCustomerId(),
                 description = saveCardSession["description"] as String,
                 amount = saveCardSession["amount"] as Int,
                 sessionType = saveCardSession["sessionType"] as String,
@@ -56,7 +56,7 @@ class CardSessionE2ETest {
             assertTrue("Session ID should not be empty", sessionId!!.isNotEmpty())
 
             // Step 2: Initialize SDK
-            val cardSessions = CardSessions.create(context, TestData.getSecretKey())
+            val cardSessions = CardSessions.create(context, TestData.getPublicKey())
             TestUtils.ensureInitialized(cardSessions)
 
             // Step 3: Set up billing information using TestUtils
@@ -102,7 +102,7 @@ class CardSessionE2ETest {
                 // Step 7: Verify session status
                 try {
                     // Add delay to allow session status to update
-                    delay(2000L) // Wait 2 seconds for session to complete
+                    delay(3000L) // Wait 2 seconds for session to complete
 
                     val sessionDetails = apiHelper.getSession(sessionId)
                     println("Session info: ${sessionDetails}");
@@ -115,8 +115,8 @@ class CardSessionE2ETest {
                     // Check if session is completed or still active (both are acceptable in test environment)
                     val status = sessionDetails["status"] as String
                     assertTrue(
-                        "Session should be either COMPLETED or ACTIVE, but was: $status",
-                        status == "COMPLETED" || status == "ACTIVE"
+                        "Session should be COMPLETED, but was: $status",
+                        status == "COMPLETED"
                     )
                     assertEquals(
                         "Payment token should match",
@@ -152,7 +152,7 @@ class CardSessionE2ETest {
 
             val sessionResponse = apiHelper.createSession(
                 referenceId = referenceId,
-                customerId = TestData.customerId,
+                customerId = TestData.getCustomerId(),
                 description = cvnSession["description"] as String,
                 amount = cvnSession["amount"] as Int,
                 sessionType = cvnSession["sessionType"] as String,
@@ -163,12 +163,13 @@ class CardSessionE2ETest {
                 metadata = cvnSession["metadata"] as Map<String, Any>
             )
 
+            print("Session response: $sessionResponse")
             val sessionId = apiHelper.extractSessionId(sessionResponse)
             println("Session ID: $sessionId");
             assertNotNull("Session ID should not be null", sessionId)
 
             // Step 2: Initialize SDK
-            val cardSessions = CardSessions.create(context, TestData.getSecretKey())
+            val cardSessions = CardSessions.create(context, TestData.getPublicKey())
             TestUtils.ensureInitialized(cardSessions)
 
             // Step 3: Collect CVN
@@ -191,7 +192,7 @@ class CardSessionE2ETest {
             // Step 5: Try to verify session (might fail in test environment)
             try {
                 // Add delay to allow session status to update
-                delay(2000L) // Wait 2 seconds for session to complete
+                delay(5000L) // Wait 2 seconds for session to complete
 
                 val sessionDetails = apiHelper.getSession(sessionId)
                 println("Session status after CVN: ${sessionDetails["status"]}")
@@ -199,8 +200,8 @@ class CardSessionE2ETest {
                 // Verify session status (COMPLETED or ACTIVE are both acceptable)
                 val status = sessionDetails["status"] as String
                 assertTrue(
-                    "Session should be either COMPLETED or ACTIVE after CVN, but was: $status",
-                    status == "COMPLETED" || status == "ACTIVE"
+                    "Session should be COMPLETED after CVN, but was: $status",
+                    status == "COMPLETED"
                 )
             } catch (e: Exception) {
                 println("Could not verify session: ${e.message}")
@@ -221,7 +222,7 @@ class CardSessionE2ETest {
             val errorSession = TestData.errorHandlingSession
             val sessionResponse = apiHelper.createSession(
                 referenceId = referenceId,
-                customerId = TestData.customerId,
+                customerId = TestData.getCustomerId(),
                 description = errorSession["description"] as String,
                 amount = errorSession["amount"] as Int,
                 sessionType = errorSession["sessionType"] as String,
@@ -309,7 +310,7 @@ class CardSessionE2ETest {
             val referenceId = "test_state_${System.currentTimeMillis()}"
             val sessionResponse = apiHelper.createSession(
                 referenceId = referenceId,
-                customerId = TestData.customerId,
+                customerId = TestData.getCustomerId(),
                 description = "State flow test",
                 amount = 0,
                 sessionType = "SAVE",
@@ -400,7 +401,7 @@ class CardSessionE2ETest {
                 val referenceId = "test_multi_${System.currentTimeMillis()}_$index"
                 val sessionResponse = apiHelper.createSession(
                     referenceId = referenceId,
-                    customerId = TestData.customerId,
+                    customerId = TestData.getCustomerId(),
                     description = "Multi-card test $index",
                     amount = 0,
                     sessionType = "SAVE",
